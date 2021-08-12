@@ -12,5 +12,13 @@
   },
   "bugs": {
     "url": "https://github.com/masker-at/server/issues"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.36"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "tsc"
   }
 }
