@@ -1,0 +1,16 @@
+{
+  "name": "@masker-at/postgres-models",
+  "version": "0.0.1",
+  "description": "",
+  "author": "antonlyap <laposhchenkoanton@gmail.com>",
+  "homepage": "https://github.com/masker-at/server#readme",
+  "license": "GPL-3.0-only",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masker-at/server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/masker-at/server/issues"
+  }
+}
