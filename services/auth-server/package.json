@@ -1,6 +1,6 @@
 {
   "name": "@masker-at/auth-server",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "",
   "license": "GPL-3.0-only",
   "dependencies": {
-    "@masker-at/postgres-models": "^0.0.4"
+    "@masker-at/postgres-models": "^0.0.5"
   },
   "repository": {
     "type": "git",
