@@ -7,9 +7,9 @@ export default async function errorHandler(
   res: FastifyReply,
 ): Promise<void> {
   if (err instanceof HTTPError) {
-    await res.status(err.httpStatus).send(err);
+    await res.status(err.httpStatus).send(err.toJSON());
   } else {
     console.error(err);
-    await res.status(500).send(new HTTPError('INTERNAL_SERVER_ERROR'));
+    await res.status(500).send(new HTTPError('INTERNAL_SERVER_ERROR').toJSON());
   }
 }

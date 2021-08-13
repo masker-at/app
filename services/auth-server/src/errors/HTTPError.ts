@@ -11,6 +11,10 @@ const ERRORS = {
     message: 'Your password is incorrect',
     httpStatus: 403,
   },
+  USER_ALREADY_EXISTS: {
+    message: 'User with this email already exists',
+    httpStatus: 403,
+  },
 };
 
 export default class HTTPError extends Error {

@@ -5,25 +5,25 @@ import HTTPError from '../errors/HTTPError';
 import { AuthBody, AuthBodySchema, createAndSendSession } from '../utils/auth';
 import errorHandler from '../errors/errorHandler';
 
-export default async function loginRoute(app: FastifyInstance): Promise<void> {
+export default async function signUpRoute(app: FastifyInstance): Promise<void> {
   app.post<{ Body: AuthBody }>(
-    '/login',
+    '/sign-up',
     {
       schema: { body: AuthBodySchema },
     },
     async (req, res) => {
       const { email, password } = req.body;
-      const user = await User.findOne({ email });
+      const passwordHash = await argon2.hash(password);
 
-      if (!user) {
-        throw new HTTPError('USER_NOT_FOUND');
+      try {
+        const user = await User.create({ email, passwordHash }).save();
+        await createAndSendSession(user, res);
+      } catch (err) {
+        if (err.code === '23505' && err.detail?.startsWith('Key (email)=(')) {
+          throw new HTTPError('USER_ALREADY_EXISTS');
+        }
+        throw err;
       }
-
-      if (!(await argon2.verify(user.passwordHash, password))) {
-        throw new HTTPError('INVALID_PASSWORD');
-      }
-
-      await createAndSendSession(user, res);
     },
   );
 
