@@ -1,7 +1,9 @@
 import 'reflect-metadata';
+import crypto from 'crypto';
 import { createConnection } from 'typeorm';
 import fastify from 'fastify';
 import fastifyCors from 'fastify-cors';
+import fastifyCookie from 'fastify-cookie';
 import errorHandler from './errors/errorHandler';
 
 (async () => {
@@ -10,6 +12,9 @@ import errorHandler from './errors/errorHandler';
 
   const app = fastify();
   await app.register(fastifyCors);
+  await app.register(fastifyCookie, {
+    secret: process.env.COOKIE_SECRET || crypto.randomBytes(32).toString('base64'),
+  });
 
   app.get('/ping', async (req, res) => {
     await res.send('pong');
