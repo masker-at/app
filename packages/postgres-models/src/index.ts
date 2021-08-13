@@ -1,4 +1,4 @@
-import 'reflect-metadata';
-import { createConnection } from 'typeorm';
+import { CreateUser1628796351766 } from './migrations/1628796351766-CreateUser';
 
-void createConnection();
+export const migrations = [CreateUser1628796351766];
+export { default as User } from './entities/User';
