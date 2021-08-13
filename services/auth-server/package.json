@@ -9,7 +9,9 @@
   "author": "",
   "license": "GPL-3.0-only",
   "dependencies": {
-    "@masker-at/postgres-models": "^0.0.6"
+    "@masker-at/postgres-models": "^0.0.6",
+    "fastify": "^3.20.1",
+    "fastify-cors": "^6.0.2"
   },
   "repository": {
     "type": "git",
