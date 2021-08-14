@@ -8,6 +8,8 @@ export default async function errorHandler(
 ): Promise<void> {
   if (err instanceof HTTPError) {
     await res.status(err.httpStatus).send(err.toJSON());
+  } else if ('validation' in err) {
+    await res.status(400).send(err);
   } else {
     console.error(err);
     await res.status(500).send(new HTTPError('INTERNAL_SERVER_ERROR').toJSON());
