@@ -9,11 +9,14 @@
   "author": "",
   "license": "GPL-3.0-only",
   "dependencies": {
+    "@masker-at/postal-api": "0.0.8",
     "@masker-at/postgres-models": "^0.0.8",
     "argon2": "^0.28.2",
+    "dotenv": "^10.0.0",
     "fastify": "^3.20.1",
     "fastify-cookie": "^5.3.1",
-    "fastify-cors": "^6.0.2"
+    "fastify-cors": "^6.0.2",
+    "jsonwebtoken": "^8.5.1"
   },
   "repository": {
     "type": "git",
@@ -21,5 +24,8 @@
   },
   "bugs": {
     "url": "https://github.com/masker-at/server/issues"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.4"
   }
 }

@@ -1,11 +1,18 @@
 import 'reflect-metadata';
 import crypto from 'crypto';
+import dotenv from 'dotenv';
 import { createConnection } from 'typeorm';
 import fastify from 'fastify';
+import { join } from 'path';
 import fastifyCors from 'fastify-cors';
 import fastifyCookie from 'fastify-cookie';
+
+dotenv.config({ path: join(__dirname, '../../../.env') });
+
+/* eslint-disable import/first */
 import loginRoute from './routes/login';
 import signUpRoute from './routes/signUp';
+/* eslint-enable import/first */
 
 (async () => {
   const connection = await createConnection();
