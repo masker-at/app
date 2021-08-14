@@ -1,0 +1,22 @@
+{
+  "name": "@masker-at/postal-api",
+  "version": "0.0.7",
+  "description": "Postal email server API for use in Masker@ backend services",
+  "author": "antonlyap <laposhchenkoanton@gmail.com>",
+  "homepage": "https://github.com/masker-at/server#readme",
+  "license": "GPL-3.0-only",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masker-at/server.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "bugs": {
+    "url": "https://github.com/masker-at/server/issues"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
