@@ -1,6 +1,6 @@
 {
   "name": "@masker-at/auth-server",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "",
   "license": "GPL-3.0-only",
   "dependencies": {
-    "@masker-at/postgres-models": "^0.0.7",
+    "@masker-at/postgres-models": "^0.0.8",
     "argon2": "^0.28.2",
     "fastify": "^3.20.1",
     "fastify-cookie": "^5.3.1",
