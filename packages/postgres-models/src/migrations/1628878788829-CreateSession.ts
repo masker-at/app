@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class AddCSRFToken1628878788829 implements MigrationInterface {
-    name = 'AddCSRFToken1628878788829'
+export class CreateSession1628878788829 implements MigrationInterface {
+    name = 'CreateSession1628878788829'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "session" ("id" character varying NOT NULL, "csrfToken" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "userId" integer, CONSTRAINT "PK_f55da76ac1c3ac420f444d2ff11" PRIMARY KEY ("id"))`);
