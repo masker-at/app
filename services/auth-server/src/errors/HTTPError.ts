@@ -15,6 +15,14 @@ const ERRORS = {
     message: 'User with this email already exists',
     httpStatus: 403,
   },
+  EMAIL_ALREADY_VERIFIED: {
+    message: 'Your email address is already verified',
+    httpStatus: 403,
+  },
+  VERIFICATION_COUNTDOWN_NOT_FINISHED: {
+    message: "Verification countdown hasn't finished yet, please try later",
+    httpStatus: 429,
+  },
 };
 
 export default class HTTPError extends Error {

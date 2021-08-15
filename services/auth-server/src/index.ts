@@ -12,13 +12,18 @@ dotenv.config({ path: join(__dirname, '../../../.env') });
 /* eslint-disable import/first */
 import loginRoute from './routes/login';
 import signUpRoute from './routes/signUp';
+import emailVerificationRoutes from './routes/emailVerification';
 /* eslint-enable import/first */
 
 (async () => {
   const connection = await createConnection();
   await connection.runMigrations();
 
-  const app = fastify();
+  const app = fastify({
+    ignoreTrailingSlash: true,
+    maxParamLength: 500,
+    bodyLimit: 1024,
+  });
   await app.register(fastifyCors);
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET || crypto.randomBytes(32).toString('base64'),
@@ -30,6 +35,7 @@ import signUpRoute from './routes/signUp';
 
   await app.register(loginRoute);
   await app.register(signUpRoute);
+  await app.register(emailVerificationRoutes);
 
   await app.listen(3000, '0.0.0.0');
   console.log('Listening on port 3000');
