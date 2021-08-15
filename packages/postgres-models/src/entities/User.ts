@@ -11,9 +11,9 @@ export default class User extends BaseEntity {
   @Column()
   passwordHash: string;
 
-  @Column()
+  @Column({ default: false })
   isEmailVerified: boolean;
 
-  @Column()
+  @Column({ default: new Date(0) })
   lastEmailVerificationSentDate: Date;
 }
