@@ -20,7 +20,11 @@ export default async function signUpRoute(app: FastifyInstance): Promise<void> {
       const passwordHash = await argon2.hash(password);
 
       try {
-        const user = await User.create({ email, passwordHash }).save();
+        const user = User.create({
+          email,
+          passwordHash,
+          lastEmailVerificationSentDate: new Date(),
+        });
 
         const verificationToken = jwt.sign(
           {
@@ -46,6 +50,8 @@ The link expires in 1 hour. If you need to request a new one, sign in to your ac
 If you didn't sign up for Masker@, please ignore this message - someone probably registered with your email by mistake.
 `,
         });
+
+        await user.save();
 
         await createAndSendSession(user, res);
       } catch (err) {
