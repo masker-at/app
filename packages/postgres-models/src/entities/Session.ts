@@ -10,6 +10,9 @@ export default class Session extends BaseEntity {
   user: User;
 
   @Column()
+  userId: number;
+
+  @Column()
   csrfToken: string;
 
   @CreateDateColumn()
