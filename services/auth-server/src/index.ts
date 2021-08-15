@@ -13,6 +13,7 @@ dotenv.config({ path: join(__dirname, '../../../.env') });
 import loginRoute from './routes/login';
 import signUpRoute from './routes/signUp';
 import emailVerificationRoutes from './routes/emailVerification';
+import meRoutes from './routes/me';
 /* eslint-enable import/first */
 
 (async () => {
@@ -38,6 +39,7 @@ import emailVerificationRoutes from './routes/emailVerification';
   await app.register(loginRoute);
   await app.register(signUpRoute);
   await app.register(emailVerificationRoutes);
+  await app.register(meRoutes);
 
   await app.listen(3000, '0.0.0.0');
   console.log('Listening on port 3000');

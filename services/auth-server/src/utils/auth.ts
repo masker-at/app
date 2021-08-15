@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { FastifyReply } from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import { Session, User } from '@masker-at/postgres-models';
 
 export interface AuthBody {
@@ -41,5 +41,25 @@ export async function createAndSendSession(user: User, res: FastifyReply): Promi
 
   await res.send({ csrfToken: session.csrfToken });
 
+  return session;
+}
+
+export async function getSession(
+  req: FastifyRequest,
+  includeUser = false,
+): Promise<Session | null> {
+  const csrfToken = req.headers['x-csrf-token'];
+  const sessionCookie = req.cookies.sid ? req.unsignCookie(req.cookies.sid) : null;
+
+  if (!csrfToken || !sessionCookie?.valid || !sessionCookie.value) {
+    return null;
+  }
+
+  const session = await Session.findOne(sessionCookie.value, {
+    relations: includeUser ? ['user'] : [],
+  });
+  if (!session || session.csrfToken !== csrfToken) {
+    return null;
+  }
   return session;
 }
