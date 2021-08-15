@@ -1,3 +1,4 @@
+import EventEmitter from 'events';
 import jwt from 'jsonwebtoken';
 import PostalAPI from '@masker-at/postal-api';
 
@@ -34,3 +35,5 @@ If you didn't sign up for Masker@, please ignore this message - someone probably
 `,
   });
 }
+
+export const emailVerificationEmitter = new EventEmitter();
