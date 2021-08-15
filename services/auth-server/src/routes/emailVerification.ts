@@ -1,6 +1,10 @@
 import { FastifyInstance } from 'fastify';
 import jwt from 'jsonwebtoken';
 import { User } from '@masker-at/postgres-models';
+import authenticateUserHook from '../hooks/authenticateUser';
+import errorHandler from '../errors/errorHandler';
+import HTTPError from '../errors/HTTPError';
+import { signVerificationToken, sendVerificationEmail } from '../utils/emailVerification';
 
 export default async function emailVerificationRoutes(app: FastifyInstance): Promise<void> {
   app.get<{
@@ -45,21 +49,23 @@ export default async function emailVerificationRoutes(app: FastifyInstance): Pro
     },
   );
 
-  // app.post<{
-  //   Body: { userID: number };
-  // }>(
-  //   '/resend-email',
-  //   {
-  //     schema: {
-  //       body: {
-  //         type: 'object',
-  //         properties: {
-  //           userID: { type: 'number' },
-  //         },
-  //         required: ['userID'],
-  //       },
-  //     },
-  //   },
-  //   async (req, res) => {},
-  // );
+  app.post('/resend-email', { preHandler: authenticateUserHook }, async (req, res) => {
+    if (req.user.isEmailVerified) {
+      throw new HTTPError('EMAIL_ALREADY_VERIFIED');
+    }
+
+    if (Date.now() - req.user.lastEmailVerificationSentDate.getTime() < 60000) {
+      throw new HTTPError('VERIFICATION_COUNTDOWN_NOT_FINISHED');
+    }
+
+    const verificationToken = signVerificationToken(req.user.id);
+    await sendVerificationEmail(req.user.email, verificationToken);
+
+    req.user.lastEmailVerificationSentDate = new Date();
+    await req.user.save();
+
+    await res.send({ lastEmailVerificationSentDate: req.user.lastEmailVerificationSentDate });
+  });
+
+  app.setErrorHandler(errorHandler);
 }

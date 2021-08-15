@@ -23,6 +23,10 @@ const ERRORS = {
     message: "Verification countdown hasn't finished yet, please try later",
     httpStatus: 429,
   },
+  NOT_AUTHENTICATED: {
+    message: 'You are not authenticated',
+    httpStatus: 401,
+  },
 };
 
 export default class HTTPError extends Error {

@@ -29,6 +29,8 @@ import emailVerificationRoutes from './routes/emailVerification';
     secret: process.env.COOKIE_SECRET || crypto.randomBytes(32).toString('base64'),
   });
 
+  app.decorateRequest('user', null);
+
   app.get('/ping', async (req, res) => {
     await res.send('pong');
   });
