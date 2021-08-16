@@ -1,1 +1,1 @@
-module.exports = { extends: '../../.eslintrc.js' };
+module.exports = { extends: '../../.eslintrc-node.js' };
