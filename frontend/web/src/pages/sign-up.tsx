@@ -1,10 +1,34 @@
-import { FC, FormEvent, useCallback } from 'react';
+import { ChangeEvent, FC, FormEvent, useCallback, useState } from 'react';
 import Input from '../components/login/Input';
 
 const SignUpPage: FC = () => {
   const handleSubmit = useCallback((event: FormEvent) => {
     event.preventDefault();
   }, []);
+
+  const [emailValue, setEmailValue] = useState('');
+  const handleEmailChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setEmailValue(event.target.value);
+  }, []);
+
+  const [passwordValue, setPasswordValue] = useState('');
+  const handlePasswordChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setPasswordValue(event.target.value);
+  }, []);
+
+  const [isRepeatPasswordTouched, setIsRepeatPasswordTouched] = useState(false);
+  const [repeatPasswordValue, setRepeatPasswordValue] = useState('');
+  const handleRepeatPasswordChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setIsRepeatPasswordTouched(true);
+    setRepeatPasswordValue(event.target.value);
+  }, []);
+
+  const isSubmitButtonDisabled =
+    !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      emailValue,
+    ) ||
+    passwordValue.length < 2 ||
+    passwordValue !== repeatPasswordValue;
 
   return (
     <div className="h-screen flex flex-col justify-center items-center px-5">
@@ -32,6 +56,8 @@ const SignUpPage: FC = () => {
             aria-label="Your email address"
             type="email"
             required
+            value={emailValue}
+            onChange={handleEmailChange}
           />
           <div aria-hidden className="h-5" />
           <Input
@@ -40,6 +66,8 @@ const SignUpPage: FC = () => {
             type="password"
             required
             minLength={2}
+            value={passwordValue}
+            onChange={handlePasswordChange}
           />
           <div aria-hidden className="h-3" />
           <Input
@@ -48,7 +76,23 @@ const SignUpPage: FC = () => {
             type="password"
             required
             minLength={2}
+            value={repeatPasswordValue}
+            onChange={handleRepeatPasswordChange}
+            style={{
+              // eslint-disable-next-line no-nested-ternary
+              borderColor: isRepeatPasswordTouched
+                ? passwordValue === repeatPasswordValue
+                  ? 'rgb(5, 150, 105)'
+                  : 'rgb(220, 38, 38)'
+                : undefined,
+            }}
           />
+          {isRepeatPasswordTouched &&
+            (passwordValue === repeatPasswordValue ? (
+              <p className="text-sm text-green-600">Passwords match</p>
+            ) : (
+              <p className="text-sm text-red-600">Passwords do not match</p>
+            ))}
 
           <button
             type="submit"
@@ -62,7 +106,9 @@ const SignUpPage: FC = () => {
               mt-5
               active:bg-primary-darker
               disabled:bg-gray-300
+              disabled:cursor-default
             "
+            disabled={isSubmitButtonDisabled}
           >
             Register
           </button>
