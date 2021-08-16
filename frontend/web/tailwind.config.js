@@ -1,11 +1,23 @@
 module.exports = {
-  purge: [],
+  purge: ['src/**/*'],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        'no-offset': '0px 0px 8px 0px rgba(0, 0, 0, 0.3)',
+      },
+      colors: {
+        primary: '#62bea8',
+        'primary-darker': '#227e68',
+      },
+    },
   },
   variants: {
-    extend: {},
+    extend: {
+      borderWidth: ['focus'],
+      margin: ['focus'],
+      backgroundColor: ['active', 'disabled'],
+    },
   },
   plugins: [],
 }
