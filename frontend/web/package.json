@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "autoprefixer": "^10.3.1",
+    "axios": "^0.21.1",
     "clsx": "^1.1.1",
+    "cookies": "^0.8.0",
+    "js-cookie": "^3.0.0",
     "next": "11.1.0",
     "next-plugin-preact": "^3.0.4",
     "preact": "^10.5.13",
@@ -20,6 +23,8 @@
     "tailwindcss": "^2.2.7"
   },
   "devDependencies": {
+    "@types/cookies": "^0.7.7",
+    "@types/js-cookie": "^2.2.7",
     "@types/react": "^17.0.18",
     "@types/react-dom": "^17.0.9",
     "eslint-config-airbnb-typescript-prettier": "^4.2.0",
