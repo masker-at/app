@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 import Input from '../components/login/Input';
 import { login, verifySession } from '../utils/api';
 
@@ -56,6 +57,9 @@ const LoginPage: FC = () => {
 
   return (
     <div className="h-screen flex flex-col justify-center items-center px-5">
+      <Head>
+        <title>Log In - Masker@</title>
+      </Head>
       <header className="flex flex-col items-center mb-5">
         <a href="https://masker.at">
           <img src="/img/logo.svg" alt="Masker@ logo" width="155" height="32" />

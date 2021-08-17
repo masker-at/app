@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from 'react';
@@ -64,6 +65,9 @@ const SignUpPage: FC = () => {
 
   return (
     <div className="h-screen flex flex-col justify-center items-center px-5">
+      <Head>
+        <title>Sign Up - Masker@</title>
+      </Head>
       <header className="flex flex-col items-center mb-5">
         <h1 className="font-quicksand text-3xl mb-3 text-center">
           <a href="https://masker.at">
