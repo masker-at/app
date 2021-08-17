@@ -25,7 +25,10 @@ import meRoutes from './routes/me';
     maxParamLength: 500,
     bodyLimit: 1024,
   });
-  await app.register(fastifyCors);
+  await app.register(fastifyCors, {
+    credentials: true,
+    origin: [/^http:\/\/localhost/, /^https:\/\/(.*\.)?masker.at/],
+  });
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET || crypto.randomBytes(32).toString('base64'),
   });
