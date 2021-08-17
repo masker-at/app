@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from 'react';
 import Input from '../components/login/Input';
@@ -126,6 +127,13 @@ const SignUpPage: FC = () => {
           <p className="text-sm text-gray-400 text-center">No credit card required</p>
         </form>
       </main>
+      <p className="mt-5 font-quicksand">
+        Already have an account?{' '}
+        <Link href="/login">
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a className="text-primary-darker font-bold">Log in</a>
+        </Link>
+      </p>
     </div>
   );
 };

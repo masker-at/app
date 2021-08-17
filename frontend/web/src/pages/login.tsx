@@ -57,6 +57,13 @@ const LoginPage: FC = () => {
           </button>
         </form>
       </main>
+      <p className="mt-5 font-quicksand">
+        Don&apos;t have an account?{' '}
+        <Link href="/sign-up">
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a className="text-primary-darker font-bold">Sign up</a>
+        </Link>
+      </p>
     </div>
   );
 };

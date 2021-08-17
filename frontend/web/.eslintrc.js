@@ -6,7 +6,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
   rules: {
-    quotes: ['error', 'single'],
+    quotes: 'off',
     'lines-between-class-members': ['off'],
     '@typescript-eslint/no-floating-promises': ['error', { ignoreIIFE: true }],
     '@typescript-eslint/no-empty-function': ['off'],
