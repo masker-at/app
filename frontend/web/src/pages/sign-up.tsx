@@ -3,12 +3,9 @@ import { useRouter } from 'next/router';
 import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from 'react';
 import Input from '../components/login/Input';
 import { verifySession } from '../utils/api';
+import signUp from '../utils/api/signUp';
 
 const SignUpPage: FC = () => {
-  const handleSubmit = useCallback((event: FormEvent) => {
-    event.preventDefault();
-  }, []);
-
   const [emailValue, setEmailValue] = useState('');
   const handleEmailChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(event.target.value);
@@ -42,6 +39,29 @@ const SignUpPage: FC = () => {
     })();
   }, [router]);
 
+  const [errorLocation, setErrorLocation] = useState<'EMAIL' | 'FORM' | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const handleSubmit = useCallback(
+    async (event: FormEvent) => {
+      event.preventDefault();
+      try {
+        await signUp(emailValue, passwordValue);
+        await router.push('/dashboard');
+      } catch (err) {
+        switch (err.response?.data.code) {
+          case 'USER_ALREADY_EXISTS':
+            setErrorLocation('EMAIL');
+            setErrorMessage('A user with this email already exists. Did you want to log in?');
+            break;
+          default:
+            setErrorLocation('FORM');
+            setErrorMessage('Sorry, something went wrong. Please try later');
+        }
+      }
+    },
+    [emailValue, passwordValue, router],
+  );
+
   return (
     <div className="h-screen flex flex-col justify-center items-center px-5">
       <header className="flex flex-col items-center mb-5">
@@ -70,7 +90,13 @@ const SignUpPage: FC = () => {
             required
             value={emailValue}
             onChange={handleEmailChange}
+            style={{
+              borderColor: errorLocation === 'EMAIL' ? 'rgb(220, 38, 38)' : undefined,
+            }}
           />
+          {errorLocation === 'EMAIL' && errorMessage && (
+            <p className="text-sm text-red-600">{errorMessage}</p>
+          )}
           <div aria-hidden className="h-5" />
           <Input
             placeholder="Choose a password..."
@@ -91,12 +117,10 @@ const SignUpPage: FC = () => {
             value={repeatPasswordValue}
             onChange={handleRepeatPasswordChange}
             style={{
-              // eslint-disable-next-line no-nested-ternary
-              borderColor: isRepeatPasswordTouched
-                ? passwordValue === repeatPasswordValue
-                  ? 'rgb(5, 150, 105)'
-                  : 'rgb(220, 38, 38)'
-                : undefined,
+              borderColor:
+                isRepeatPasswordTouched && passwordValue !== repeatPasswordValue
+                  ? 'rgb(220, 38, 38)'
+                  : undefined,
             }}
           />
           {isRepeatPasswordTouched &&
@@ -105,6 +129,10 @@ const SignUpPage: FC = () => {
             ) : (
               <p className="text-sm text-red-600">Passwords do not match</p>
             ))}
+
+          {errorLocation === 'FORM' && errorMessage && (
+            <p className="text-sm text-red-600 mt-2">{errorMessage}</p>
+          )}
 
           <button
             type="submit"
