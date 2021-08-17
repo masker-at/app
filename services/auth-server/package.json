@@ -1,6 +1,6 @@
 {
   "name": "@masker-at/auth-server",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -9,8 +9,8 @@
   "author": "",
   "license": "GPL-3.0-only",
   "dependencies": {
-    "@masker-at/postal-api": "^0.1.1",
-    "@masker-at/postgres-models": "^0.1.1",
+    "@masker-at/postal-api": "^0.1.3",
+    "@masker-at/postgres-models": "^0.1.3",
     "argon2": "^0.28.2",
     "dotenv": "^10.0.0",
     "fastify": "^3.20.1",
