@@ -17,16 +17,14 @@ export default async function signUpRoute(app: FastifyInstance): Promise<void> {
       const passwordHash = await argon2.hash(password);
 
       try {
-        const user = User.create({
+        const user = await User.create({
           email,
           passwordHash,
           lastEmailVerificationSentDate: new Date(),
-        });
+        }).save();
 
         const verificationToken = signVerificationToken(user.id);
         await sendVerificationEmail(email, verificationToken);
-
-        await user.save();
 
         await createAndSendSession(user, res);
       } catch (err) {
