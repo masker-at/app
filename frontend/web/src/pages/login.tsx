@@ -1,10 +1,21 @@
-import { FC, FormEvent, useCallback } from 'react';
+import { FC, FormEvent, useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Input from '../components/login/Input';
+import { verifySession } from '../utils/api';
 
 const LoginPage: FC = () => {
   const handleSubmit = useCallback((event: FormEvent) => {
     event.preventDefault();
   }, []);
+
+  const router = useRouter();
+  useEffect(() => {
+    (async () => {
+      if (await verifySession()) {
+        await router.push('/dashboard');
+      }
+    })();
+  }, [router]);
 
   return (
     <div className="h-screen flex flex-col justify-center items-center px-5">

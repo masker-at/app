@@ -1,5 +1,7 @@
-import { ChangeEvent, FC, FormEvent, useCallback, useState } from 'react';
+import { useRouter } from 'next/router';
+import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from 'react';
 import Input from '../components/login/Input';
+import { verifySession } from '../utils/api';
 
 const SignUpPage: FC = () => {
   const handleSubmit = useCallback((event: FormEvent) => {
@@ -29,6 +31,15 @@ const SignUpPage: FC = () => {
     ) ||
     passwordValue.length < 2 ||
     passwordValue !== repeatPasswordValue;
+
+  const router = useRouter();
+  useEffect(() => {
+    (async () => {
+      if (await verifySession()) {
+        await router.push('/dashboard');
+      }
+    })();
+  }, [router]);
 
   return (
     <div className="h-screen flex flex-col justify-center items-center px-5">
