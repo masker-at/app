@@ -1,10 +1,9 @@
 import { FastifyInstance } from 'fastify';
 import argon2 from 'argon2';
 import { User } from '@masker-at/postgres-models';
-import HTTPError from '../errors/HTTPError';
+import { HTTPError, errorHandler } from '@masker-at/http-utils';
 import { AuthBody, AuthBodySchema, createAndSendSession } from '../utils/auth';
 import { signVerificationToken, sendVerificationEmail } from '../utils/emailVerification';
-import errorHandler from '../errors/errorHandler';
 
 export default async function signUpRoute(app: FastifyInstance): Promise<void> {
   app.post<{ Body: AuthBody }>(

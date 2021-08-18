@@ -1,6 +1,6 @@
 import { FastifyRequest } from 'fastify';
-import HTTPError from '../errors/HTTPError';
-import { getSession } from '../utils/auth';
+import HTTPError from './HTTPError';
+import getSession from './getSession';
 
 export default async function authenticateUserHook(req: FastifyRequest): Promise<void> {
   const session = await getSession(req, true);

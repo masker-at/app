@@ -27,7 +27,7 @@ import meRoutes from './routes/me';
   });
   await app.register(fastifyCors, {
     credentials: true,
-    origin: [/^http:\/\/localhost/, /^https:\/\/(.*\.)?masker.at/],
+    origin: [/^http:\/\/localhost(:|\/)/, /^https:\/\/(.*\.)?masker.at/],
   });
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET || crypto.randomBytes(32).toString('base64'),

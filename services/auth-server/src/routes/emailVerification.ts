@@ -1,9 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import jwt from 'jsonwebtoken';
 import { User } from '@masker-at/postgres-models';
-import authenticateUserHook from '../hooks/authenticateUser';
-import errorHandler from '../errors/errorHandler';
-import HTTPError from '../errors/HTTPError';
+import { authenticateUserHook, errorHandler, HTTPError } from '@masker-at/http-utils';
 import {
   signVerificationToken,
   sendVerificationEmail,
@@ -38,13 +36,13 @@ export default async function emailVerificationRoutes(app: FastifyInstance): Pro
         if (result.type !== 'EMAIL_VERIFICATION') throw new Error();
         ({ userID } = result);
       } catch {
-        await res.status(404).send('Not found'); // TODO: Add HTML page
+        await res.status(404).send('This link is invalid or expired. Please request a new one'); // TODO: Add HTML page
         return;
       }
 
       const { affected } = await User.update(userID, { isEmailVerified: true });
       if (affected === 0) {
-        await res.status(404).send('Not found'); // TODO: Add HTML page
+        await res.status(404).send('This link is invalid or expired. Please request a new one'); // TODO: Add HTML page
       } else {
         emailVerificationEmitter.emit(`email-verified-${userID}`);
         await res.send(
