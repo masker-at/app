@@ -5,5 +5,9 @@
 		reverse_proxy http://auth-server:3000
 	}
 
+	handle_path /aliases/* {
+		reverse_proxy http://alias-manager:3000
+	}
+
 	error 404
 }
