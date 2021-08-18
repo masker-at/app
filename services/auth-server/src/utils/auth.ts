@@ -37,6 +37,7 @@ export async function createAndSendSession(user: User, res: FastifyReply): Promi
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
     signed: true,
+    path: '/',
   });
 
   await res.send({ csrfToken: session.csrfToken });

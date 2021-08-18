@@ -9,6 +9,8 @@ services:
       POSTGRES_DB: masker
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
 
   auth-server:
     image: node:16

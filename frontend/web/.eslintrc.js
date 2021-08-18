@@ -22,5 +22,6 @@ module.exports = {
         depth: 3,
       },
     ],
+    '@typescript-eslint/no-non-null-assertion': ['off'],
   }
 };
