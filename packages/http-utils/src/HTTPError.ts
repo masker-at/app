@@ -31,6 +31,10 @@ const ERRORS = {
     message: 'Please verify your email address',
     httpStatus: 403,
   },
+  ALIAS_NOT_FOUND: {
+    message: "This alias doesn't exist",
+    httpStatus: 404,
+  },
 };
 
 export default class HTTPError extends Error {

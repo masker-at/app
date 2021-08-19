@@ -3,17 +3,21 @@ import {
   authenticateUserHook,
   checkEmailVerificationHook,
   errorHandler,
+  HTTPError,
 } from '@masker-at/http-utils';
 import { Alias } from '@masker-at/postgres-models';
-import generateAliasUsername from '../utils/generateAliasUsername';
 
-export default async function createRoute(app: FastifyInstance): Promise<void> {
+export default async function updateRoute(app: FastifyInstance): Promise<void> {
   app.post<{
     Body: {
       name?: string;
+      isActive?: boolean;
+    };
+    Params: {
+      id: number;
     };
   }>(
-    '/create',
+    '/update/:id',
     {
       preHandler: [authenticateUserHook, checkEmailVerificationHook],
       schema: {
@@ -21,28 +25,28 @@ export default async function createRoute(app: FastifyInstance): Promise<void> {
           type: 'object',
           properties: {
             name: { type: 'string' },
+            isActive: { type: 'boolean' },
           },
+        },
+        params: {
+          type: 'object',
+          properties: {
+            id: { type: 'integer' },
+          },
+          required: ['id'],
         },
       },
     },
     async (req, res) => {
-      const alias = Alias.create({
-        user: req.user,
-        name: req.body.name || null,
-      });
-      let isAliasInserted = false;
-      while (!isAliasInserted) {
-        alias.address = `${generateAliasUsername()}@masker.at`;
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          await alias.save();
-          isAliasInserted = true;
-        } catch (err) {
-          if (err.code !== '23505' || !err.detail?.startsWith('Key (address)=(')) {
-            throw err;
-          }
-        }
+      const alias = await Alias.findOne(req.params.id);
+      if (!alias || alias.userId !== req.user.id) {
+        throw new HTTPError('ALIAS_NOT_FOUND');
       }
+
+      if (typeof req.body.name === 'string') alias.name = req.body.name || null;
+      if (typeof req.body.isActive === 'boolean') alias.isActive = req.body.isActive;
+      await alias.save();
+
       await res.send({
         id: alias.id,
         address: alias.address,

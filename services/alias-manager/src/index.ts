@@ -8,6 +8,8 @@ import fastifyCors from 'fastify-cors';
 import fastifyCookie from 'fastify-cookie';
 import listRoute from './routes/list';
 import createRoute from './routes/create';
+import updateRoute from './routes/update';
+import deleteRoute from './routes/delete';
 
 dotenv.config({ path: join(__dirname, '../../../.env') });
 
@@ -36,6 +38,8 @@ dotenv.config({ path: join(__dirname, '../../../.env') });
 
   await app.register(listRoute);
   await app.register(createRoute);
+  await app.register(updateRoute);
+  await app.register(deleteRoute);
 
   await app.listen(3000, '0.0.0.0');
   console.log('Listening on port 3000');
