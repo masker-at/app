@@ -9,6 +9,9 @@ export default class Alias extends BaseEntity {
   @Column({ unique: true })
   address: string;
 
+  @Column({ nullable: true })
+  name?: string;
+
   @ManyToOne(() => User, { nullable: true })
   user?: User;
 
