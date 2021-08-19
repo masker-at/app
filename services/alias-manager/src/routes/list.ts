@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { authenticateUserHook } from '@masker-at/http-utils';
+import { authenticateUserHook, errorHandler } from '@masker-at/http-utils';
 import { Alias } from '@masker-at/postgres-models';
 
 export default async function listRoute(app: FastifyInstance): Promise<void> {
@@ -28,7 +28,11 @@ export default async function listRoute(app: FastifyInstance): Promise<void> {
         skip: req.query.skip,
         take: req.query.limit,
       });
-      await res.send(aliases.map(({ id, address, isActive }) => ({ id, address, isActive })));
+      await res.send(
+        aliases.map(({ id, address, isActive, name }) => ({ id, address, isActive, name })),
+      );
     },
   );
+
+  app.setErrorHandler(errorHandler);
 }
