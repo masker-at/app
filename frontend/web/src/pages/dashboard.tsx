@@ -5,11 +5,12 @@ import { dehydrate } from 'react-query/hydration';
 import Cookies from 'cookies';
 import me from '../utils/api/me';
 import EmailUnverified from '../components/dashboard/EmailUnverified';
+import Dashboard from '../components/dashboard/Dashboard';
 
 const DashboardPage: FC = () => {
   const { data } = useQuery('me', () => me());
 
-  return data?.isEmailVerified ? <div>Hello {data.email}</div> : <EmailUnverified />;
+  return data?.isEmailVerified ? <Dashboard /> : <EmailUnverified />;
 };
 export default DashboardPage;
 
