@@ -11,7 +11,7 @@
     "url": "git+https://github.com/masker-at/app.git"
   },
   "bugs": {
-    "url": "https://github.com/masker-at/server/issues"
+    "url": "https://github.com/masker-at/app/issues"
   },
   "dependencies": {
     "autoprefixer": "^10.3.1",

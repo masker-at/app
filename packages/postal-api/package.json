@@ -14,7 +14,7 @@
     "build": "tsc"
   },
   "bugs": {
-    "url": "https://github.com/masker-at/server/issues"
+    "url": "https://github.com/masker-at/app/issues"
   },
   "dependencies": {
     "axios": "^0.21.1"

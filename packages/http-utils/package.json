@@ -1,18 +1,11 @@
 {
   "name": "@masker-at/http-utils",
   "version": "0.1.5",
-  "description": "> TODO: description",
+  "description": "",
   "author": "antonlyap <laposhchenkoanton@gmail.com>",
   "homepage": "https://github.com/masker-at/app#readme",
   "license": "GPL-3.0-only",
   "main": "dist/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/masker-at/app.git"
