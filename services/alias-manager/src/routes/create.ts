@@ -1,5 +1,9 @@
 import { FastifyInstance } from 'fastify';
-import { authenticateUserHook, errorHandler } from '@masker-at/http-utils';
+import {
+  authenticateUserHook,
+  checkEmailVerificationHook,
+  errorHandler,
+} from '@masker-at/http-utils';
 import { Alias } from '@masker-at/postgres-models';
 import generateAliasUsername from '../utils/generateAliasUsername';
 
@@ -11,7 +15,7 @@ export default async function createRoute(app: FastifyInstance): Promise<void> {
   }>(
     '/create',
     {
-      preHandler: authenticateUserHook,
+      preHandler: [authenticateUserHook, checkEmailVerificationHook],
       schema: {
         body: {
           type: 'object',

@@ -27,6 +27,10 @@ const ERRORS = {
     message: 'You are not authenticated',
     httpStatus: 401,
   },
+  EMAIL_NOT_VERIFIED: {
+    message: 'Please verify your email address',
+    httpStatus: 403,
+  },
 };
 
 export default class HTTPError extends Error {

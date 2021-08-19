@@ -1,5 +1,9 @@
 import { FastifyInstance } from 'fastify';
-import { authenticateUserHook, errorHandler } from '@masker-at/http-utils';
+import {
+  authenticateUserHook,
+  checkEmailVerificationHook,
+  errorHandler,
+} from '@masker-at/http-utils';
 import { Alias } from '@masker-at/postgres-models';
 
 export default async function listRoute(app: FastifyInstance): Promise<void> {
@@ -20,7 +24,7 @@ export default async function listRoute(app: FastifyInstance): Promise<void> {
           },
         },
       },
-      preHandler: authenticateUserHook,
+      preHandler: [authenticateUserHook, checkEmailVerificationHook],
     },
     async (req, res) => {
       const aliases = await Alias.find({
