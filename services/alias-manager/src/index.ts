@@ -5,6 +5,9 @@ import { createConnection } from 'typeorm';
 import fastify from 'fastify';
 import { join } from 'path';
 import fastifyCors from 'fastify-cors';
+import fastifyCookie from 'fastify-cookie';
+import listRoute from './routes/list';
+import createRoute from './routes/create';
 
 dotenv.config({ path: join(__dirname, '../../../.env') });
 
@@ -21,12 +24,18 @@ dotenv.config({ path: join(__dirname, '../../../.env') });
     credentials: true,
     origin: [/^http:\/\/localhost(:|\/)/, /^https:\/\/(.*\.)?masker.at/],
   });
+  await app.register(fastifyCookie, {
+    secret: process.env.COOKIE_SECRET || crypto.randomBytes(32).toString('base64'),
+  });
 
   app.decorateRequest('user', null);
 
   app.get('/ping', async (req, res) => {
     await res.send('pong');
   });
+
+  await app.register(listRoute);
+  await app.register(createRoute);
 
   await app.listen(3000, '0.0.0.0');
   console.log('Listening on port 3000');
