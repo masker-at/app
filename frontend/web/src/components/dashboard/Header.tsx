@@ -17,7 +17,7 @@ const Header: FC = () => {
   }, []);
 
   return (
-    <header className="my-10 flex flex-wrap justify-between">
+    <header className="mt-10 mb-3 sm:mb-10 flex flex-wrap justify-between items-center">
       <img src="/img/logo.svg" alt="Masker@ logo" width="180" height="37" />
 
       <div className="font-quicksand relative">
@@ -33,15 +33,16 @@ const Header: FC = () => {
         <div
           className={clsx(
             `
-                absolute
-                left-0
-                right-0
-                mt-2
-                rounded-lg
-                shadow-no-offset
-                overflow-hidden
-                transition-all
-              `,
+              absolute
+              left-0
+              right-0
+              mt-2
+              rounded-lg
+              shadow-no-offset
+              bg-white
+              overflow-hidden
+              transition-all
+            `,
             {
               'h-0': !isMenuOpen,
               'h-28': isMenuOpen,

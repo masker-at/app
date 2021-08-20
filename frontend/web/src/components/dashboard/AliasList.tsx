@@ -6,8 +6,8 @@ const AliasList: FC = () => {
   const { data } = useAliasList();
 
   return (
-    <main className="flex-grow pl-5 xl:mr-72 flex flex-col">
-      <section className="flex-grow-0 flex-shrink-0 flex justify-between items-center">
+    <main className="flex-grow sm:pl-5 xl:mr-72 flex flex-col">
+      <section className="flex-grow-0 flex-shrink-0 flex justify-between items-center flex-wrap">
         <button
           type="submit"
           className="

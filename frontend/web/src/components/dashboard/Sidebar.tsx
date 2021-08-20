@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
 const Sidebar: FC = () => (
-  <aside className="font-quicksand flex-shrink-0 w-44 pr-5 border-r border-gray-200">
-    <ul>
-      <li>
+  <aside className="font-quicksand flex-shrink-0 sm:w-44 sm:pr-5 sm:border-r border-gray-200 mb-3 sm:mb-0">
+    <ul className="flex sm:block">
+      <li className="mr-2 sm:mr-0">
         <button
           type="button"
           className="
