@@ -5,6 +5,7 @@ export interface Alias {
   address: string;
   name?: string;
   isActive: boolean;
+  isNew?: boolean;
 }
 
 export async function listAliases(skip = 0, limit?: number): Promise<Alias[]> {
@@ -19,5 +20,10 @@ export async function updateAlias(
   updateObject: { name?: string; isActive?: boolean },
 ): Promise<Alias> {
   const { data } = await apiClient.post(`/aliases/update/${id}`, updateObject);
+  return data;
+}
+
+export async function createAlias(name?: string): Promise<Alias> {
+  const { data } = await apiClient.post(`/aliases/create`, { name });
   return data;
 }

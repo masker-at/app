@@ -1,9 +1,11 @@
 import { FC } from 'react';
 import useAliasList from '../../api-hooks/useAliasList';
+import useCreateAlias from '../../api-hooks/useCreateAlias';
 import Alias from './Alias';
 
 const AliasList: FC = () => {
   const { data } = useAliasList();
+  const { mutate } = useCreateAlias();
 
   return (
     <main className="flex-grow sm:pl-5 xl:mr-72 flex flex-col">
@@ -20,6 +22,7 @@ const AliasList: FC = () => {
             rounded
             active:bg-primary-darker
           "
+          onClick={() => mutate({})}
         >
           + New
         </button>
