@@ -6,7 +6,16 @@ import { Hydrate } from 'react-query/hydration';
 import '../styles/index.css';
 
 const App = ({ Component, pageProps }: AppProps): ReactNode => {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 30000,
+          },
+        },
+      }),
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
