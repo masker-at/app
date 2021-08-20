@@ -16,6 +16,8 @@ const Sidebar: FC = () => (
             hover:bg-primary
             hover:bg-opacity-25
             hover:text-primary-darker
+
+            bg-primary bg-opacity-25 text-primary-darker font-bold
           "
         >
           My Aliases

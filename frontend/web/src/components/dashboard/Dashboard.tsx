@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import AliasList from './AliasList';
 import Header from './Header';
 import Sidebar from './Sidebar';
 
@@ -7,9 +8,10 @@ const Dashboard: FC = () => {
     <>
       <div className="container mx-auto px-10 overflow-auto min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 flex">
+        <div className="flex-1 flex">
           <Sidebar />
-        </main>
+          <AliasList />
+        </div>
       </div>
     </>
   );
