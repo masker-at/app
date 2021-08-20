@@ -12,23 +12,29 @@ const useRenameAlias = (): UseMutationResult<
     Alias,
     Error,
     { id: number; updateObject: { name?: string; isActive?: boolean } },
+    { i: number; alias: Alias } | null
   >(({ id, updateObject }) => updateAlias(id, updateObject), {
     onMutate: ({ id, updateObject }) => {
-      const data: {
-        pages: { data: Alias[] }[];
-      } = queryClient.getQueryData('aliases')!;
-      for (let i = 0; i < data.pages.length; i += 1) {
-        for (let j = 0; j < data.pages[i].data.length; j += 1) {
-          const alias = data.pages[i].data[j];
-          if (alias.id === id) {
-            Object.assign(alias, updateObject);
-            break;
-          }
+      const data: Alias[] | undefined = queryClient.getQueryData('aliases');
+      if (!data) return null;
+      for (let i = 0; i < data.length; i += 1) {
+        const alias = data[i];
+        if (alias.id === id) {
+          const aliasCopy = { ...alias };
+          Object.assign(alias, updateObject);
+          queryClient.setQueryData('aliases', data);
+          return { i, alias: aliasCopy };
         }
       }
-      queryClient.setQueryData('aliases', data);
+      return null;
     },
-    onSettled: () => queryClient.invalidateQueries('aliases'),
+    onError: (error, variables, context) => {
+      if (context) {
+        const data: Alias[] = queryClient.getQueryData('aliases')!;
+        data[context.i] = context.alias;
+        queryClient.setQueryData('aliases', data);
+      }
+    },
   });
 };
 export default useRenameAlias;

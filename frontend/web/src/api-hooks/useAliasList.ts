@@ -1,19 +1,6 @@
-import { QueryFunction, useInfiniteQuery } from 'react-query';
-import { Alias, listAliases } from '../utils/api/aliases';
-
-const fetchAliasList: QueryFunction<{ data: Alias[]; nextPageParam?: number }> = async ({
-  pageParam = 0,
-}) => {
-  const aliases = await listAliases(pageParam, 50);
-  return {
-    data: aliases,
-    nextPageParam: aliases.length < 50 ? undefined : pageParam + 50,
-  };
-};
+import { useQuery } from 'react-query';
+import { listAliases } from '../utils/api/aliases';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const useAliasList = () =>
-  useInfiniteQuery('aliases', fetchAliasList, {
-    getNextPageParam: (lastPage) => lastPage.nextPageParam,
-  });
+const useAliasList = () => useQuery('aliases', () => listAliases());
 export default useAliasList;

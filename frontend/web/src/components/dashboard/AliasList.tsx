@@ -33,10 +33,9 @@ const AliasList: FC = () => {
       </section>
 
       <section className="flex-1 overflow-auto mt-3">
-        {data &&
-          data.pages.map((page) =>
-            page.data.map((alias) => <Alias alias={alias} key={alias.id} />),
-          )}
+        {data?.map((alias) => (
+          <Alias alias={alias} key={alias.id} />
+        ))}
       </section>
     </main>
   );
