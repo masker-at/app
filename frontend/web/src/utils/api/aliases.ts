@@ -13,3 +13,11 @@ export async function listAliases(skip: number, limit: number): Promise<Alias[]>
   });
   return data;
 }
+
+export async function updateAlias(
+  id: number,
+  updateObject: { name?: string; isActive?: boolean },
+): Promise<Alias> {
+  const { data } = await apiClient.post(`/aliases/update/${id}`, updateObject);
+  return data;
+}
