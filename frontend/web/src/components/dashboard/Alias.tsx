@@ -74,7 +74,7 @@ const Alias: FC<Props> = ({ alias }) => {
                 }
               }}
             >
-              Cancel
+              {alias.isNew ? 'Leave unnamed' : 'Cancel'}
             </button>
           </div>
         ) : (
