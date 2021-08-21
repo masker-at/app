@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Head from 'next/head';
 import { FC, memo, useEffect, useRef, useState } from 'react';
 import useDeleteAlias from '../../api-hooks/useDeleteAlias';
 import useFinishAliasCreation from '../../api-hooks/useFinishAliasCreation';
@@ -31,6 +32,10 @@ const Alias: FC<Props> = ({ alias }) => {
 
   return (
     <div className="rounded border border-primary bg-gray-100 p-2 mb-3 flex justify-between items-center">
+      <Head>
+        <title>Masker@</title>
+      </Head>
+
       <div>
         {isEditing || alias.isNew ? (
           <div>
@@ -115,7 +120,20 @@ const Alias: FC<Props> = ({ alias }) => {
         <button
           type="button"
           className="bg-red-700 font-quicksand text-white rounded px-2 py-1 ml-2"
-          onClick={() => deleteAlias({ id: alias.id })}
+          onClick={() => {
+            if (
+              // eslint-disable-next-line no-alert
+              window.confirm(
+                `Are you sure you want to delete ${
+                  alias.name || 'this alias'
+                }? This action cannot be undone
+- We will no longer forward emails from it
+- Any stored data associated with it will be deleted`,
+              )
+            ) {
+              deleteAlias({ id: alias.id });
+            }
+          }}
         >
           Delete
         </button>
