@@ -6,6 +6,7 @@ import {
 } from '@masker-at/http-utils';
 import { Alias } from '@masker-at/postgres-models';
 import generateAliasUsername from '../utils/generateAliasUsername';
+import serializeAlias from '../utils/serializeAlias';
 
 export default async function createRoute(app: FastifyInstance): Promise<void> {
   app.post<{
@@ -43,12 +44,7 @@ export default async function createRoute(app: FastifyInstance): Promise<void> {
           }
         }
       }
-      await res.send({
-        id: alias.id,
-        address: alias.address,
-        isActive: alias.isActive,
-        name: alias.name,
-      });
+      await res.send(serializeAlias(alias));
     },
   );
 

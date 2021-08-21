@@ -5,6 +5,7 @@ import {
   errorHandler,
 } from '@masker-at/http-utils';
 import { Alias } from '@masker-at/postgres-models';
+import serializeAlias from '../utils/serializeAlias';
 
 export default async function listRoute(app: FastifyInstance): Promise<void> {
   app.get<{
@@ -31,10 +32,12 @@ export default async function listRoute(app: FastifyInstance): Promise<void> {
         where: { user: req.user },
         skip: req.query.skip,
         take: req.query.limit,
+        order: {
+          isActive: 'DESC',
+          createdAt: 'DESC',
+        },
       });
-      await res.send(
-        aliases.map(({ id, address, isActive, name }) => ({ id, address, isActive, name })),
-      );
+      await res.send(aliases.map(serializeAlias));
     },
   );
 

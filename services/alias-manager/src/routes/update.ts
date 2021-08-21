@@ -6,6 +6,7 @@ import {
   HTTPError,
 } from '@masker-at/http-utils';
 import { Alias } from '@masker-at/postgres-models';
+import serializeAlias from '../utils/serializeAlias';
 
 export default async function updateRoute(app: FastifyInstance): Promise<void> {
   app.post<{
@@ -47,12 +48,7 @@ export default async function updateRoute(app: FastifyInstance): Promise<void> {
       if (typeof req.body.isActive === 'boolean') alias.isActive = req.body.isActive;
       await alias.save();
 
-      await res.send({
-        id: alias.id,
-        address: alias.address,
-        isActive: alias.isActive,
-        name: alias.name,
-      });
+      await res.send(serializeAlias(alias));
     },
   );
 

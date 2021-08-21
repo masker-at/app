@@ -6,6 +6,7 @@ import {
   HTTPError,
 } from '@masker-at/http-utils';
 import { Alias } from '@masker-at/postgres-models';
+import serializeAlias from '../utils/serializeAlias';
 
 export default async function deleteRoute(app: FastifyInstance): Promise<void> {
   app.delete<{
@@ -32,12 +33,7 @@ export default async function deleteRoute(app: FastifyInstance): Promise<void> {
         throw new HTTPError('ALIAS_NOT_FOUND');
       }
 
-      const response = {
-        id: alias.id,
-        address: alias.address,
-        isActive: alias.isActive,
-        name: alias.name,
-      };
+      const response = serializeAlias(alias);
 
       alias.user = null;
       await alias.save();
