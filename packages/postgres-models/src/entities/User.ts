@@ -19,4 +19,7 @@ export default class User extends BaseEntity {
 
   @Column({ default: false })
   hasChangedEmail: boolean;
+
+  @Column({ default: new Date(0) })
+  lastPasswordResetSentDate: Date;
 }
