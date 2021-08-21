@@ -14,6 +14,7 @@ import loginRoute from './routes/login';
 import signUpRoute from './routes/signUp';
 import emailVerificationRoutes from './routes/emailVerification';
 import meRoutes from './routes/me';
+import settingsRoutes from './routes/settings';
 /* eslint-enable import/first */
 
 (async () => {
@@ -43,6 +44,7 @@ import meRoutes from './routes/me';
   await app.register(signUpRoute);
   await app.register(emailVerificationRoutes);
   await app.register(meRoutes);
+  await app.register(settingsRoutes);
 
   await app.listen(3000, '0.0.0.0');
   console.log('Listening on port 3000');
