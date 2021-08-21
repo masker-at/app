@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import useAliasList from '../../api-hooks/useAliasList';
 import useCreateAlias from '../../api-hooks/useCreateAlias';
 import Alias from './Alias';
@@ -6,6 +6,7 @@ import Alias from './Alias';
 const AliasList: FC = () => {
   const { data } = useAliasList();
   const { mutate } = useCreateAlias();
+  const [search, setSearch] = useState('');
 
   return (
     <main className="flex-grow sm:pl-5 xl:mr-72 flex flex-col">
@@ -32,13 +33,18 @@ const AliasList: FC = () => {
           placeholder="Search..."
           aria-label="Search"
           className="px-2 py-1 rounded outline-none border border-gray-400 focus:border-primary"
+          value={search}
+          onChange={({ target }) => setSearch(target.value)}
         />
       </section>
 
       <section className="flex-1 overflow-auto mt-3">
-        {data?.map((alias) => (
-          <Alias alias={alias} key={alias.id} />
-        ))}
+        {data?.map(
+          (alias) =>
+            (!search || alias.name?.toLowerCase().includes(search.toLowerCase())) && (
+              <Alias alias={alias} key={alias.id} />
+            ),
+        )}
       </section>
     </main>
   );
