@@ -24,6 +24,11 @@ export async function updateAlias(
 }
 
 export async function createAlias(name?: string): Promise<Alias> {
-  const { data } = await apiClient.post(`/aliases/create`, { name });
+  const { data } = await apiClient.post('/aliases/create', { name });
+  return data;
+}
+
+export async function deleteAlias(id: number): Promise<Alias> {
+  const { data } = await apiClient.delete(`/aliases/delete/${id}`);
   return data;
 }

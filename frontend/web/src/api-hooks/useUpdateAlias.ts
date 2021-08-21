@@ -1,7 +1,7 @@
 import { useMutation, UseMutationResult, useQueryClient } from 'react-query';
 import { Alias, updateAlias } from '../utils/api/aliases';
 
-const useRenameAlias = (): UseMutationResult<
+const useUpdateAlias = (): UseMutationResult<
   Alias,
   Error,
   { id: number; updateObject: { name?: string; isActive?: boolean } }
@@ -37,4 +37,4 @@ const useRenameAlias = (): UseMutationResult<
     },
   });
 };
-export default useRenameAlias;
+export default useUpdateAlias;
