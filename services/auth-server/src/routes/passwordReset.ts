@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { FastifyInstance } from 'fastify';
 import argon2 from 'argon2';
 import { HTTPError, errorHandler } from '@masker-at/http-utils';
-import { User } from '@masker-at/postgres-models';
+import { User, Session } from '@masker-at/postgres-models';
 import { signPasswordResetToken, sendPasswordResetEmail } from '../utils/passwordReset';
 
 export default async function passwordResetRoutes(app: FastifyInstance): Promise<void> {
@@ -119,6 +119,7 @@ export default async function passwordResetRoutes(app: FastifyInstance): Promise
         await res.status(404).send('This link is invalid or expired. Please request a new one');
       } else {
         await res.send('Your password was changed! You can now log in with your new password.');
+        await Session.delete({ userId: userID });
       }
     },
   );
