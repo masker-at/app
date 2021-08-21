@@ -4,8 +4,9 @@ import { User } from '@masker-at/postgres-models';
 import { authenticateUserHook, errorHandler, HTTPError } from '@masker-at/http-utils';
 import {
   signVerificationToken,
-  sendVerificationEmail,
+  sendChangeVerificationEmail,
   emailVerificationEmitter,
+  sendVerificationEmail,
 } from '../utils/emailVerification';
 
 export default async function emailVerificationRoutes(app: FastifyInstance): Promise<void> {
@@ -70,7 +71,11 @@ export default async function emailVerificationRoutes(app: FastifyInstance): Pro
     }
 
     const verificationToken = signVerificationToken(req.user);
-    await sendVerificationEmail(req.user.email, verificationToken);
+    if (req.user.hasChangedEmail) {
+      await sendChangeVerificationEmail(req.user.email, verificationToken);
+    } else {
+      await sendVerificationEmail(req.user.email, verificationToken);
+    }
 
     req.user.lastEmailVerificationSentDate = new Date();
     await req.user.save();

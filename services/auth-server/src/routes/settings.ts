@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import argon2 from 'argon2';
 import { errorHandler, authenticateUserHook, HTTPError } from '@masker-at/http-utils';
-import { signVerificationToken, sendVerificationEmail } from '../utils/emailVerification';
+import { signVerificationToken, sendChangeVerificationEmail } from '../utils/emailVerification';
 import serializeUser from '../utils/serializeUser';
 
 export default async function settingsRoutes(app: FastifyInstance): Promise<void> {
@@ -31,6 +31,7 @@ export default async function settingsRoutes(app: FastifyInstance): Promise<void
       req.user.email = req.body.email;
       req.user.isEmailVerified = false;
       req.user.lastEmailVerificationSentDate = new Date();
+      req.user.hasChangedEmail = true;
 
       try {
         await req.user.save();
@@ -42,7 +43,7 @@ export default async function settingsRoutes(app: FastifyInstance): Promise<void
       }
 
       const verificationToken = signVerificationToken(req.user);
-      await sendVerificationEmail(req.user.email, verificationToken);
+      await sendChangeVerificationEmail(req.user.email, verificationToken);
 
       await res.send(serializeUser(req.user));
     },
