@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import User from './User';
 
 @Entity()
@@ -20,4 +27,7 @@ export default class Alias extends BaseEntity {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
 }
