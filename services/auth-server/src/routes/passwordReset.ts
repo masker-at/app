@@ -1,9 +1,18 @@
+import { join } from 'path';
+import { promises as fs } from 'fs';
+import jwt from 'jsonwebtoken';
 import { FastifyInstance } from 'fastify';
+import argon2 from 'argon2';
 import { HTTPError, errorHandler } from '@masker-at/http-utils';
 import { User } from '@masker-at/postgres-models';
 import { signPasswordResetToken, sendPasswordResetEmail } from '../utils/passwordReset';
 
 export default async function passwordResetRoutes(app: FastifyInstance): Promise<void> {
+  const passwordResetForm = await fs.readFile(
+    join(__dirname, '../../views/passwordResetForm.html'),
+    'utf-8',
+  );
+
   app.post<{
     Body: {
       email: string;
@@ -43,6 +52,74 @@ export default async function passwordResetRoutes(app: FastifyInstance): Promise
       await sendPasswordResetEmail(user.email, token);
 
       await res.send({ lastPasswordResetSentDate: user.lastPasswordResetSentDate });
+    },
+  );
+
+  app.get<{
+    Params: {
+      token: string;
+    };
+  }>(
+    '/reset-password/:token',
+    {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            token: { type: 'string' },
+          },
+          required: ['token'],
+        },
+      },
+    },
+    async (req, res) => {
+      await res.type('text/html').send(passwordResetForm.replace('%TOKEN%', req.params.token));
+    },
+  );
+
+  app.post<{
+    Body: {
+      password: string;
+      token: string;
+    };
+  }>(
+    '/submit-password-reset',
+    {
+      schema: {
+        body: {
+          type: 'object',
+          properties: {
+            password: { type: 'string', minLength: 2 },
+            token: { type: 'string' },
+          },
+          required: ['password', 'token'],
+        },
+      },
+    },
+    async (req, res) => {
+      const { password, token } = req.body;
+      let userID: number;
+      try {
+        const result = jwt.verify(token, process.env.EMAIL_VERIFICATION_JWT_SECRET!) as {
+          userID: number;
+          type: string;
+        };
+        if (result.type !== 'PASSWORD_RESET') throw new Error();
+        ({ userID } = result);
+      } catch {
+        await res.status(404).send('This link is invalid or expired. Please request a new one');
+        return;
+      }
+
+      const { affected } = await User.update(
+        { id: userID },
+        { passwordHash: await argon2.hash(password) },
+      );
+      if (affected === 0) {
+        await res.status(404).send('This link is invalid or expired. Please request a new one');
+      } else {
+        await res.send('Your password was changed! You can now log in with your new password.');
+      }
     },
   );
 

@@ -7,7 +7,6 @@ import { UseCITextForEmail1629316148965 } from './migrations/1629316148965-UseCI
 import { AddAliasName1629357438808 } from './migrations/1629357438808-AddAliasName';
 import { AddAliasCreatedAt1629549418192 } from './migrations/1629549418192-AddAliasCreatedAt';
 import { AddUserHasChangedEmail1629565220241 } from './migrations/1629565220241-AddUserHasChangedEmail';
-import { AddLastPasswordResetSentDate1629565631728 } from './migrations/1629565631728-AddLastPasswordResetSentDate';
 import { AddLastPasswordResetSentDateDefault1629565835800 } from './migrations/1629565835800-AddLastPasswordResetSentDateDefault';
 
 export const migrations = [
@@ -20,7 +19,6 @@ export const migrations = [
   AddAliasName1629357438808,
   AddAliasCreatedAt1629549418192,
   AddUserHasChangedEmail1629565220241,
-  AddLastPasswordResetSentDate1629565631728,
   AddLastPasswordResetSentDateDefault1629565835800,
 ];
 export { default as User } from './entities/User';

@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { createConnection } from 'typeorm';
 import fastify from 'fastify';
 import { join } from 'path';
+import fastifyFormBody from 'fastify-formbody';
 import fastifyCors from 'fastify-cors';
 import fastifyCookie from 'fastify-cookie';
 
@@ -27,6 +28,7 @@ import passwordResetRoutes from './routes/passwordReset';
     maxParamLength: 500,
     bodyLimit: 1024,
   });
+  await app.register(fastifyFormBody);
   await app.register(fastifyCors, {
     credentials: true,
     origin: [/^http:\/\/localhost(:|\/)/, /^https:\/\/(.*\.)?masker.at/],
