@@ -26,7 +26,7 @@ const EmailUnverified: FC = () => {
   }, [data]);
 
   return (
-    <main className="flex flex-col items-center justify-center w-screen h-screen text-center">
+    <main className="flex flex-col items-center justify-start w-screen h-screen text-center">
       <p>
         We&apos;ve sent a verification email to <b>{data?.email}</b>.
         <br />

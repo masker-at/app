@@ -5,12 +5,22 @@ import { dehydrate } from 'react-query/hydration';
 import Cookies from 'cookies';
 import me from '../utils/api/me';
 import EmailUnverified from '../components/dashboard/EmailUnverified';
-import Dashboard from '../components/dashboard/Dashboard';
+import Header from '../components/dashboard/Header';
+import Sidebar from '../components/dashboard/Sidebar';
+import AliasList from '../components/dashboard/AliasList';
 
 const DashboardPage: FC = () => {
   const { data } = useQuery('me', () => me());
 
-  return data?.isEmailVerified ? <Dashboard /> : <EmailUnverified />;
+  return (
+    <div className="container mx-auto px-10 overflow-auto min-h-screen flex flex-col">
+      <Header />
+      <div className="flex-1 flex flex-col sm:flex-row">
+        <Sidebar />
+        {data!.isEmailVerified ? <AliasList /> : <EmailUnverified />}
+      </div>
+    </div>
+  );
 };
 export default DashboardPage;
 
