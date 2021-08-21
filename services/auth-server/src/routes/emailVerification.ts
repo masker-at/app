@@ -28,19 +28,27 @@ export default async function emailVerificationRoutes(app: FastifyInstance): Pro
     },
     async (req, res) => {
       let userID: number;
+      let userEmail: string;
       try {
         const result = jwt.verify(req.params.token, process.env.EMAIL_VERIFICATION_JWT_SECRET!) as {
           userID: number;
+          userEmail: string;
           type: string;
         };
         if (result.type !== 'EMAIL_VERIFICATION') throw new Error();
-        ({ userID } = result);
+        ({ userID, userEmail } = result);
       } catch {
         await res.status(404).send('This link is invalid or expired. Please request a new one'); // TODO: Add HTML page
         return;
       }
 
-      const { affected } = await User.update(userID, { isEmailVerified: true });
+      const { affected } = await User.update(
+        {
+          id: userID,
+          email: userEmail,
+        },
+        { isEmailVerified: true },
+      );
       if (affected === 0) {
         await res.status(404).send('This link is invalid or expired. Please request a new one'); // TODO: Add HTML page
       } else {
@@ -61,7 +69,7 @@ export default async function emailVerificationRoutes(app: FastifyInstance): Pro
       throw new HTTPError('VERIFICATION_COUNTDOWN_NOT_FINISHED');
     }
 
-    const verificationToken = signVerificationToken(req.user.id);
+    const verificationToken = signVerificationToken(req.user);
     await sendVerificationEmail(req.user.email, verificationToken);
 
     req.user.lastEmailVerificationSentDate = new Date();

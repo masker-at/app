@@ -22,7 +22,7 @@ export default async function signUpRoute(app: FastifyInstance): Promise<void> {
           lastEmailVerificationSentDate: new Date(),
         }).save();
 
-        const verificationToken = signVerificationToken(user.id);
+        const verificationToken = signVerificationToken(user);
         await sendVerificationEmail(email, verificationToken);
 
         await createAndSendSession(user, res);
