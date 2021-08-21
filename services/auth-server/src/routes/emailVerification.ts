@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '@masker-at/postgres-models';
 import { authenticateUserHook, errorHandler, HTTPError } from '@masker-at/http-utils';
 import {
-  signVerificationToken,
+  signEmailVerificationToken,
   sendChangeVerificationEmail,
   emailVerificationEmitter,
   sendVerificationEmail,
@@ -70,7 +70,7 @@ export default async function emailVerificationRoutes(app: FastifyInstance): Pro
       throw new HTTPError('VERIFICATION_COUNTDOWN_NOT_FINISHED');
     }
 
-    const verificationToken = signVerificationToken(req.user);
+    const verificationToken = signEmailVerificationToken(req.user);
     if (req.user.hasChangedEmail) {
       await sendChangeVerificationEmail(req.user.email, verificationToken);
     } else {

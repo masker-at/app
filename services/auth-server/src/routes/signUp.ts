@@ -3,7 +3,7 @@ import argon2 from 'argon2';
 import { User } from '@masker-at/postgres-models';
 import { HTTPError, errorHandler } from '@masker-at/http-utils';
 import { AuthBody, AuthBodySchema, createAndSendSession } from '../utils/auth';
-import { signVerificationToken, sendVerificationEmail } from '../utils/emailVerification';
+import { signEmailVerificationToken, sendVerificationEmail } from '../utils/emailVerification';
 
 export default async function signUpRoute(app: FastifyInstance): Promise<void> {
   app.post<{ Body: AuthBody }>(
@@ -22,7 +22,7 @@ export default async function signUpRoute(app: FastifyInstance): Promise<void> {
           lastEmailVerificationSentDate: new Date(),
         }).save();
 
-        const verificationToken = signVerificationToken(user);
+        const verificationToken = signEmailVerificationToken(user);
         await sendVerificationEmail(email, verificationToken);
 
         await createAndSendSession(user, res);

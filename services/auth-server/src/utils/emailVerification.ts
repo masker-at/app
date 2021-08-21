@@ -1,11 +1,9 @@
 import EventEmitter from 'events';
 import jwt from 'jsonwebtoken';
-import PostalAPI from '@masker-at/postal-api';
 import { User } from '@masker-at/postgres-models';
+import postalAPI from './postalAPI';
 
-const postalAPI = new PostalAPI(process.env.POSTAL_API_BASE_URL!, process.env.POSTAL_API_KEY!);
-
-export function signVerificationToken(user: User): string {
+export function signEmailVerificationToken(user: User): string {
   return jwt.sign(
     {
       type: 'EMAIL_VERIFICATION',

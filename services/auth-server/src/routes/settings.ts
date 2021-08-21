@@ -1,7 +1,10 @@
 import { FastifyInstance } from 'fastify';
 import argon2 from 'argon2';
 import { errorHandler, authenticateUserHook, HTTPError } from '@masker-at/http-utils';
-import { signVerificationToken, sendChangeVerificationEmail } from '../utils/emailVerification';
+import {
+  signEmailVerificationToken,
+  sendChangeVerificationEmail,
+} from '../utils/emailVerification';
 import serializeUser from '../utils/serializeUser';
 
 export default async function settingsRoutes(app: FastifyInstance): Promise<void> {
@@ -42,7 +45,7 @@ export default async function settingsRoutes(app: FastifyInstance): Promise<void
         throw err;
       }
 
-      const verificationToken = signVerificationToken(req.user);
+      const verificationToken = signEmailVerificationToken(req.user);
       await sendChangeVerificationEmail(req.user.email, verificationToken);
 
       await res.send(serializeUser(req.user));
