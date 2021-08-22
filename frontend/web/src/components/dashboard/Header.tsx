@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import me from '../../utils/api/me';
@@ -60,9 +61,10 @@ const Header: FC = () => {
                   items-stretch
                 "
             >
-              <button type="button" className="mx-3 my-1 text-left">
-                My Aliases
-              </button>
+              <Link href="/dashboard">
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a className="block mx-3 my-1 text-left">My Aliases</a>
+              </Link>
             </li>
             <li
               className="
@@ -74,9 +76,10 @@ const Header: FC = () => {
                   items-stretch
                 "
             >
-              <button type="button" className="mx-3 my-1 text-left">
-                Account Settings
-              </button>
+              <Link href="/settings">
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a className="block mx-3 my-1 text-left">Account Settings</a>
+              </Link>
             </li>
             <li
               className="

@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import Head from 'next/head';
 import { FC, memo, useEffect, useRef, useState } from 'react';
 import useDeleteAlias from '../../api-hooks/useDeleteAlias';
 import useFinishAliasCreation from '../../api-hooks/useFinishAliasCreation';
@@ -32,10 +31,6 @@ const Alias: FC<Props> = ({ alias }) => {
 
   return (
     <div className="rounded border border-primary bg-gray-100 p-2 mb-3 flex justify-between items-center">
-      <Head>
-        <title>Masker@</title>
-      </Head>
-
       <div>
         {isEditing || alias.isNew ? (
           <div>

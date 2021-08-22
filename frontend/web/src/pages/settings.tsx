@@ -1,33 +1,27 @@
 import { GetServerSideProps } from 'next';
 import { FC } from 'react';
-import { QueryClient, useQuery } from 'react-query';
+import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import Head from 'next/head';
 import Cookies from 'cookies';
 import me from '../utils/api/me';
-import EmailUnverified from '../components/dashboard/EmailUnverified';
 import Header from '../components/dashboard/Header';
 import Sidebar from '../components/dashboard/Sidebar';
-import AliasList from '../components/dashboard/AliasList';
 
-const DashboardPage: FC = () => {
-  const { data } = useQuery('me', () => me());
+const SettingsPage: FC = () => (
+  <div className="container mx-auto px-10 overflow-auto min-h-screen flex flex-col">
+    <Head>
+      <title>Masker@</title>
+    </Head>
 
-  return (
-    <div className="container mx-auto px-10 overflow-auto min-h-screen flex flex-col">
-      <Head>
-        <title>Masker@</title>
-      </Head>
-
-      <Header />
-      <div className="flex-1 flex flex-col sm:flex-row">
-        <Sidebar />
-        {data!.isEmailVerified ? <AliasList /> : <EmailUnverified />}
-      </div>
+    <Header />
+    <div className="flex-1 flex flex-col sm:flex-row">
+      <Sidebar />
+      
     </div>
-  );
-};
-export default DashboardPage;
+  </div>
+);
+export default SettingsPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const queryClient = new QueryClient();
