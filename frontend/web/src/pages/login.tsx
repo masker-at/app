@@ -104,23 +104,28 @@ const LoginPage: FC = () => {
             <p className="text-red-600 text-sm mt-2">{errorMessage}</p>
           )}
 
-          <button
-            type="submit"
-            className="
-              bg-primary
-              text-white
-              font-quicksand
-              font-bold
-              p-2
-              w-20
-              rounded
-              mt-3
-              ml-auto
-              active:bg-primary-darker
-            "
-          >
-            Log in
-          </button>
+          <div className="flex justify-between items-center mt-3">
+            <Link href="/forgot-password">
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <a className="text-primary-darker font-bold">Forgot your password?</a>
+            </Link>
+
+            <button
+              type="submit"
+              className="
+                bg-primary
+                text-white
+                font-quicksand
+                font-bold
+                p-2
+                w-20
+                rounded
+                active:bg-primary-darker
+              "
+            >
+              Log in
+            </button>
+          </div>
         </form>
       </main>
       <p className="mt-5 font-quicksand">

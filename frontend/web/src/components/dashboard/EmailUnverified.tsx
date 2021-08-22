@@ -1,7 +1,8 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import usePollEmailVerification from '../../api-hooks/usePollEmailVerification';
 import useResendEmail from '../../api-hooks/useResendEmail';
+import useCountdown from '../../hooks/useCountdown';
 import me from '../../utils/api/me';
 
 const EmailUnverified: FC = () => {
@@ -12,18 +13,7 @@ const EmailUnverified: FC = () => {
   useEffect(() => pollEmailVerification({}), []);
 
   const { mutate: resendEmail } = useResendEmail();
-  const [timeLeftMs, setTimeLeftMs] = useState(
-    Date.parse(data!.lastEmailVerificationSentDate) - Date.now(),
-  );
-  const timeLeftMin = Math.floor(timeLeftMs / 60000);
-  const timeLeftSeconds = Math.floor((timeLeftMs - timeLeftMin * 60000) / 1000);
-  const timeLeftSecondsLeadingZero = `${timeLeftSeconds < 10 ? '0' : ''}${timeLeftSeconds}`;
-  useEffect(() => {
-    const interval = setInterval(() =>
-      setTimeLeftMs(Date.parse(data!.lastEmailVerificationSentDate) - Date.now() + 60000),
-    );
-    return () => clearInterval(interval);
-  }, [data]);
+  const countdown = useCountdown(Date.parse(data!.lastEmailVerificationSentDate) + 60000);
 
   return (
     <main className="flex flex-col items-center justify-start w-screen h-screen text-center">
@@ -59,11 +49,11 @@ const EmailUnverified: FC = () => {
           disabled:bg-gray-300
           disabled:cursor-default
         "
-        disabled={timeLeftMs > 0}
+        disabled={!!countdown}
         onClick={resendEmail}
       >
         Resend
-        {timeLeftMs > 0 && ` in ${timeLeftMin}:${timeLeftSecondsLeadingZero}`}
+        {countdown && ` in ${countdown}`}
       </button>
     </main>
   );

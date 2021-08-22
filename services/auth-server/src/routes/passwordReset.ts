@@ -38,11 +38,11 @@ export default async function passwordResetRoutes(app: FastifyInstance): Promise
       const user = await User.findOne({ email: req.body.email });
 
       if (!user || Date.now() - user.lastPasswordResetSentDate.getTime() < 60000) {
-        await res.send({ lastPasswordResetSentDate: new Date(Date.now() + 60000).toISOString() });
+        await res.send({ lastPasswordResetSentDate: new Date().toISOString() });
         return;
       }
 
-      user.lastPasswordResetSentDate = new Date(Date.now() + 60000);
+      user.lastPasswordResetSentDate = new Date();
       await user.save();
 
       const token = signPasswordResetToken(user);
