@@ -3,7 +3,7 @@ import { promises as fs } from 'fs';
 import jwt from 'jsonwebtoken';
 import { FastifyInstance } from 'fastify';
 import argon2 from 'argon2';
-import { HTTPError, errorHandler } from '@masker-at/http-utils';
+import { errorHandler } from '@masker-at/http-utils';
 import { User, Session } from '@masker-at/postgres-models';
 import { signPasswordResetToken, sendPasswordResetEmail } from '../utils/passwordReset';
 
@@ -37,12 +37,9 @@ export default async function passwordResetRoutes(app: FastifyInstance): Promise
     async (req, res) => {
       const user = await User.findOne({ email: req.body.email });
 
-      if (!user) {
-        throw new HTTPError('USER_NOT_FOUND');
-      }
-
-      if (Date.now() - user.lastPasswordResetSentDate.getTime() < 60000) {
-        throw new HTTPError('VERIFICATION_COUNTDOWN_NOT_FINISHED');
+      if (!user || Date.now() - user.lastPasswordResetSentDate.getTime() < 60000) {
+        await res.send({ lastPasswordResetSentDate: new Date(Date.now() + 60000).toISOString() });
+        return;
       }
 
       user.lastPasswordResetSentDate = new Date(Date.now() + 60000);
