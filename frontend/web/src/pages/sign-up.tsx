@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from 'react';
-import Input from '../components/login/Input';
+import Input from '../components/Input';
 import { verifySession } from '../utils/api';
 import signUp from '../utils/api/signUp';
 
@@ -140,18 +140,7 @@ const SignUpPage: FC = () => {
 
           <button
             type="submit"
-            className="
-              bg-primary
-              text-white
-              font-quicksand
-              font-bold
-              p-2
-              rounded
-              mt-5
-              active:bg-primary-darker
-              disabled:bg-gray-300
-              disabled:cursor-default
-            "
+            className="button bg-primary active:bg-primary-darker mt-5"
             disabled={isSubmitButtonDisabled}
           >
             Register

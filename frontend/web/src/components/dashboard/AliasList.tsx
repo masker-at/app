@@ -13,16 +13,7 @@ const AliasList: FC = () => {
       <section className="flex-grow-0 flex-shrink-0 flex justify-between items-center flex-wrap">
         <button
           type="submit"
-          className="
-            bg-primary
-            text-white
-            font-quicksand
-            font-bold
-            p-2
-            w-20
-            rounded
-            active:bg-primary-darker
-          "
+          className="button bg-primary active:bg-primary-darker"
           onClick={() => mutate({})}
         >
           + New

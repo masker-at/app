@@ -114,7 +114,7 @@ const Alias: FC<Props> = ({ alias }) => {
         />
         <button
           type="button"
-          className="bg-red-700 font-quicksand text-white rounded px-2 py-1 ml-2"
+          className="button bg-red-700 ml-2 px-2 py-1"
           onClick={() => {
             if (
               // eslint-disable-next-line no-alert

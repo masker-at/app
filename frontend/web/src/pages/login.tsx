@@ -2,7 +2,7 @@ import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from 're
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
-import Input from '../components/login/Input';
+import Input from '../components/Input';
 import { login, verifySession } from '../utils/api';
 
 const LoginPage: FC = () => {
@@ -110,19 +110,7 @@ const LoginPage: FC = () => {
               <a className="text-primary-darker font-bold">Forgot your password?</a>
             </Link>
 
-            <button
-              type="submit"
-              className="
-                bg-primary
-                text-white
-                font-quicksand
-                font-bold
-                p-2
-                w-20
-                rounded
-                active:bg-primary-darker
-              "
-            >
+            <button type="submit" className="button bg-primary active:bg-primary-darker">
               Log in
             </button>
           </div>

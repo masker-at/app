@@ -36,19 +36,7 @@ const EmailUnverified: FC = () => {
 
       <button
         type="button"
-        className="
-          bg-primary
-          text-white
-          font-quicksand
-          font-bold
-          px-3
-          py-2
-          rounded
-          mt-3
-          active:bg-primary-darker
-          disabled:bg-gray-300
-          disabled:cursor-default
-        "
+        className="button bg-primary active:bg-primary-darker"
         disabled={!!countdown}
         onClick={resendEmail}
       >

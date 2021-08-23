@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FC, FormEventHandler, useCallback, useEffect, useState } from 'react';
-import Input from '../components/login/Input';
+import Input from '../components/Input';
 import useCountdown from '../hooks/useCountdown';
 import { verifySession } from '../utils/api';
 import sendPasswordReset from '../utils/api/sendPasswordReset';
@@ -61,19 +61,7 @@ const ForgotPasswordPage: FC = () => {
 
           <button
             type="submit"
-            className="
-              bg-primary
-              text-white
-              font-quicksand
-              font-bold
-              p-2
-              rounded
-              mt-3
-              ml-auto
-              active:bg-primary-darker
-              disabled:bg-gray-300
-              disabled:cursor-default
-            "
+            className="button bg-primary active:bg-primary-darker mt-5"
             disabled={!!countdown}
           >
             {countdown ? `Resend in ${countdown}` : 'Submit'}

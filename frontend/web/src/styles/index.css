@@ -1,3 +1,14 @@
+.button {
+  @apply text-white;
+  @apply font-quicksand;
+  @apply font-bold;
+  @apply px-3;
+  @apply py-2;
+  @apply rounded;
+  @apply disabled:bg-gray-300;
+  @apply disabled:cursor-default;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
