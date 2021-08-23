@@ -5,8 +5,11 @@
   @apply px-3;
   @apply py-2;
   @apply rounded;
-  @apply disabled:bg-gray-300;
-  @apply disabled:cursor-default;
+}
+
+.button:disabled, .button:disabled:active {
+  @apply bg-gray-300;
+  @apply cursor-default;
 }
 
 @tailwind base;
