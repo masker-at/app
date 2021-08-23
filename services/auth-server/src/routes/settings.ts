@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import argon2 from 'argon2';
+import { Not } from 'typeorm';
 import { errorHandler, authenticateUserHook, HTTPError } from '@masker-at/http-utils';
 import { Session } from '@masker-at/postgres-models';
 import {
@@ -86,7 +87,9 @@ export default async function settingsRoutes(app: FastifyInstance): Promise<void
 
       req.user.passwordHash = await argon2.hash(req.body.newPassword);
       await req.user.save();
-      await Session.delete({ user: req.user });
+
+      const { value } = req.unsignCookie(req.cookies.sid);
+      await Session.delete({ user: req.user, id: Not(value!) });
 
       await res.send(serializeUser(req.user));
     },
