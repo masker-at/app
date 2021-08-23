@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 import Input from '../components/Input';
-import { login, verifySession } from '../utils/api';
+import login from '../utils/api/login';
+import verifySession from '../utils/api/verifySession';
 
 const LoginPage: FC = () => {
   const router = useRouter();

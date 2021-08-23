@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import React, { FC, FormEventHandler, useCallback, useEffect, useState } from 'react';
 import Input from '../components/Input';
 import useCountdown from '../hooks/useCountdown';
-import { verifySession } from '../utils/api';
 import sendPasswordReset from '../utils/api/sendPasswordReset';
+import verifySession from '../utils/api/verifySession';
 
 const ForgotPasswordPage: FC = () => {
   const router = useRouter();

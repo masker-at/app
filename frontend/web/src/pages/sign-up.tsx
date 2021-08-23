@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from 'react';
 import Input from '../components/Input';
-import { verifySession } from '../utils/api';
 import signUp from '../utils/api/signUp';
+import verifySession from '../utils/api/verifySession';
 
 const SignUpPage: FC = () => {
   const [emailValue, setEmailValue] = useState('');
