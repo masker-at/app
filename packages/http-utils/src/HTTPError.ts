@@ -35,6 +35,10 @@ const ERRORS = {
     message: "This alias doesn't exist",
     httpStatus: 404,
   },
+  INVALID_2FA_CODE: {
+    message: 'Your authenticator app code or recovery code is invalid',
+    httpStatus: 403,
+  },
 };
 
 export default class HTTPError extends Error {

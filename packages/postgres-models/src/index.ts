@@ -8,6 +8,7 @@ import { AddAliasName1629357438808 } from './migrations/1629357438808-AddAliasNa
 import { AddAliasCreatedAt1629549418192 } from './migrations/1629549418192-AddAliasCreatedAt';
 import { AddUserHasChangedEmail1629565220241 } from './migrations/1629565220241-AddUserHasChangedEmail';
 import { AddLastPasswordResetSentDateDefault1629565835800 } from './migrations/1629565835800-AddLastPasswordResetSentDateDefault';
+import { Add2FAProperties1629740761448 } from './migrations/1629740761448-Add2FAProperties';
 
 export const migrations = [
   CreateUser1628796351766,
@@ -20,6 +21,7 @@ export const migrations = [
   AddAliasCreatedAt1629549418192,
   AddUserHasChangedEmail1629565220241,
   AddLastPasswordResetSentDateDefault1629565835800,
+  Add2FAProperties1629740761448,
 ];
 export { default as User } from './entities/User';
 export { default as Session } from './entities/Session';

@@ -22,4 +22,13 @@ export default class User extends BaseEntity {
 
   @Column({ default: new Date(0) })
   lastPasswordResetSentDate: Date;
+
+  @Column({ default: false })
+  is2FAEnabled: boolean;
+
+  @Column('character varying', { nullable: true })
+  twoFactorToken?: string | null;
+
+  @Column('simple-array', { default: [] })
+  twoFactorRecoveryCodes: string[];
 }
