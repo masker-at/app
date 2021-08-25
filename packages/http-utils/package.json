@@ -1,6 +1,6 @@
 {
   "name": "@masker-at/http-utils",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "author": "antonlyap <laposhchenkoanton@gmail.com>",
   "homepage": "https://github.com/masker-at/app#readme",
@@ -18,7 +18,7 @@
     "url": "https://github.com/masker-at/app/issues"
   },
   "dependencies": {
-    "@masker-at/postgres-models": "^0.1.8",
+    "@masker-at/postgres-models": "^0.1.9",
     "fastify": "3.20.1",
     "fastify-cookie": "^5.3.1"
   }
