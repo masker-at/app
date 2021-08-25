@@ -2,12 +2,12 @@ import crypto from 'crypto';
 import { FastifyReply } from 'fastify';
 import { Session, User } from '@masker-at/postgres-models';
 
-export interface AuthBody {
+export interface SignUpBody {
   email: string;
   password: string;
 }
 
-export const AuthBodySchema = {
+export const SignUpBodySchema = {
   type: 'object',
   properties: {
     email: {
@@ -18,6 +18,33 @@ export const AuthBodySchema = {
     password: {
       type: 'string',
       minLength: 2,
+    },
+  },
+  required: ['email', 'password'],
+};
+
+export interface LoginBody {
+  email: string;
+  password: string;
+  twoFactorCode?: string;
+}
+
+export const LoginBodySchema = {
+  type: 'object',
+  properties: {
+    email: {
+      type: 'string',
+      pattern:
+        '^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$',
+    },
+    password: {
+      type: 'string',
+      minLength: 2,
+    },
+    twoFactorCode: {
+      type: 'string',
+      minLength: 6,
+      maxLength: 15,
     },
   },
   required: ['email', 'password'],

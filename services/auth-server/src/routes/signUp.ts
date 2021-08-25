@@ -2,14 +2,14 @@ import { FastifyInstance } from 'fastify';
 import argon2 from 'argon2';
 import { User } from '@masker-at/postgres-models';
 import { HTTPError, errorHandler } from '@masker-at/http-utils';
-import { AuthBody, AuthBodySchema, createAndSendSession } from '../utils/auth';
+import { SignUpBody, SignUpBodySchema, createAndSendSession } from '../utils/auth';
 import { signEmailVerificationToken, sendVerificationEmail } from '../utils/emailVerification';
 
 export default async function signUpRoute(app: FastifyInstance): Promise<void> {
-  app.post<{ Body: AuthBody }>(
+  app.post<{ Body: SignUpBody }>(
     '/sign-up',
     {
-      schema: { body: AuthBodySchema },
+      schema: { body: SignUpBodySchema },
     },
     async (req, res) => {
       const { email, password } = req.body;
