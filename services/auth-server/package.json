@@ -19,6 +19,7 @@
     "fastify-cors": "^6.0.2",
     "fastify-formbody": "^5.1.0",
     "jsonwebtoken": "^8.5.1",
+    "qrcode": "^1.4.4",
     "speakeasy": "^2.0.0"
   },
   "repository": {
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.4",
+    "@types/qrcode": "^1.4.1",
     "@types/speakeasy": "^2.0.6"
   }
 }

@@ -5,6 +5,7 @@ export interface User {
   email: string;
   isEmailVerified: boolean;
   lastEmailVerificationSentDate: string;
+  is2FAEnabled: boolean;
 }
 
 export default async function me(cookies?: string, csrfToken?: string): Promise<User> {

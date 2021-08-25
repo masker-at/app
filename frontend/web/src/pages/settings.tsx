@@ -9,6 +9,7 @@ import Header from '../components/dashboard/Header';
 import Sidebar from '../components/dashboard/Sidebar';
 import EmailChangeForm from '../components/settings/EmailChangeForm';
 import PasswordChangeForm from '../components/settings/PasswordChangeForm';
+import TwoFactor from '../components/settings/TwoFactor';
 
 const SettingsPage: FC = () => (
   <div className="container mx-auto px-10 overflow-auto min-h-screen flex flex-col">
@@ -26,6 +27,10 @@ const SettingsPage: FC = () => (
 
         <section className="my-2">
           <PasswordChangeForm />
+        </section>
+
+        <section className="my-2">
+          <TwoFactor />
         </section>
       </main>
     </div>

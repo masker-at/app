@@ -1,7 +1,9 @@
 import { FastifyInstance } from 'fastify';
 import speakeasy from 'speakeasy';
-import { authenticateUserHook, HTTPError } from '@masker-at/http-utils';
+import QRCode from 'qrcode';
+import { authenticateUserHook, errorHandler, HTTPError } from '@masker-at/http-utils';
 import { check2FA, generateRecoveryCodes } from '../utils/twoFactor';
+import serializeUser from '../utils/serializeUser';
 
 export default async function twoFactorRoutes(app: FastifyInstance): Promise<void> {
   app.post(
@@ -21,7 +23,10 @@ export default async function twoFactorRoutes(app: FastifyInstance): Promise<voi
     });
     req.user.twoFactorToken = base32;
     await req.user.save();
-    await res.send({ base32, otpauthURL });
+
+    const qrDataURL = await QRCode.toDataURL(otpauthURL!);
+
+    await res.send({ base32, otpauthURL, qrDataURL });
   });
 
   app.post<{
@@ -50,7 +55,7 @@ export default async function twoFactorRoutes(app: FastifyInstance): Promise<voi
       req.user.is2FAEnabled = true;
       await req.user.save();
 
-      await res.send('OK');
+      await res.send(serializeUser(req.user));
     },
   );
 
@@ -80,7 +85,9 @@ export default async function twoFactorRoutes(app: FastifyInstance): Promise<voi
       req.user.is2FAEnabled = false;
       await req.user.save();
 
-      await res.send('OK');
+      await res.send(serializeUser(req.user));
     },
   );
+
+  app.setErrorHandler(errorHandler);
 }
