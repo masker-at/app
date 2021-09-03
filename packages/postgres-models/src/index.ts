@@ -10,6 +10,7 @@ import { AddUserHasChangedEmail1629565220241 } from './migrations/1629565220241-
 import { AddLastPasswordResetSentDateDefault1629565835800 } from './migrations/1629565835800-AddLastPasswordResetSentDateDefault';
 import { Add2FAProperties1629740761448 } from './migrations/1629740761448-Add2FAProperties';
 import { CreateEmail1630698064545 } from './migrations/1630698064545-CreateEmail';
+import { RemoveUnnecessaryEmailFields1630701113030 } from './migrations/1630701113030-RemoveUnnecessaryEmailFields';
 
 export const migrations = [
   CreateUser1628796351766,
@@ -24,6 +25,7 @@ export const migrations = [
   AddLastPasswordResetSentDateDefault1629565835800,
   Add2FAProperties1629740761448,
   CreateEmail1630698064545,
+  RemoveUnnecessaryEmailFields1630701113030,
 ];
 export { default as User } from './entities/User';
 export { default as Session } from './entities/Session';

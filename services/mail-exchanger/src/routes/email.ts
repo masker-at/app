@@ -24,11 +24,7 @@ export default async function emailRoute(app: FastifyInstance): Promise<void> {
     await res.send('OK'); // Send response to Postal to avoid timeouts
 
     try {
-      await Email.create({
-        alias,
-        from: req.body.mail_from,
-        messageID: req.body.message_id,
-      }).save();
+      await Email.create({ messageID: req.body.message_id }).save();
     } catch (err) {
       if (err.code === '23505' && err.detail?.startsWith('Key (messageID)=(')) {
         return;

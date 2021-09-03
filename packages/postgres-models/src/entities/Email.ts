@@ -1,27 +1,7 @@
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import Alias from './Alias';
+import { BaseEntity, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export default class Email extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ unique: true })
+  @PrimaryColumn()
   messageID: string;
-
-  @Column()
-  from: string;
-
-  @ManyToOne(() => Alias, { nullable: false })
-  alias: Alias;
-
-  @CreateDateColumn()
-  date: Date;
 }
