@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import PostalAPI from '@masker-at/postal-api';
-import { Alias } from '@masker-at/postgres-models';
+import { Alias, Email } from '@masker-at/postgres-models';
 import decorateEmail, { IncomingEmail } from '../utils/decorateEmail';
 
 // const MAX_STORED_MESSAGE_SIZE = 3 * 1024 * 1024; // 3 MB
@@ -22,6 +22,18 @@ export default async function emailRoute(app: FastifyInstance): Promise<void> {
     }
 
     await res.send('OK'); // Send response to Postal to avoid timeouts
+
+    try {
+      await Email.create({
+        alias,
+        from: req.body.mail_from,
+        messageID: req.body.message_id,
+      }).save();
+    } catch (err) {
+      if (err.code === '23505' && err.detail?.startsWith('Key (messageID)=(')) {
+        return;
+      }
+    }
 
     const { html, text, subject } = decorateEmail(req.body, alias);
 
