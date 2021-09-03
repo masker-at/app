@@ -1,0 +1,28 @@
+{
+  "name": "@masker-at/mail-exchanger",
+  "version": "0.1.9",
+  "author": "",
+  "homepage": "https://github.com/masker-at/app#readme",
+  "license": "GPL-3.0-only",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masker-at/app.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "bugs": {
+    "url": "https://github.com/masker-at/app/issues"
+  },
+  "dependencies": {
+    "@masker-at/postal-api": "^0.1.6",
+    "@masker-at/postgres-models": "^0.1.9",
+    "cheerio": "^1.0.0-rc.10",
+    "fastify": "^3.20.2",
+    "html-to-text": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/html-to-text": "^8.0.1"
+  }
+}

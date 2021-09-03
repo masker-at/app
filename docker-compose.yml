@@ -38,6 +38,20 @@ services:
     ports:
       - 9230:9229
 
+  mail-exchanger:
+    image: node:16
+    volumes:
+      - .:/opt/app
+    command: node --inspect=0.0.0.0:9229 .
+    working_dir: /opt/app/services/mail-exchanger
+    env_file: .env
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 9231:9229
+      - 4000:3000
+
   caddy:
     image: caddy:2.4.3-alpine
     volumes:
