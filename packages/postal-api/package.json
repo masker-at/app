@@ -1,6 +1,6 @@
 {
   "name": "@masker-at/postal-api",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Postal email server API for use in Masker@ backend services",
   "author": "antonlyap <laposhchenkoanton@gmail.com>",
   "homepage": "https://github.com/masker-at/server#readme",
