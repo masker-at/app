@@ -23,6 +23,10 @@ export default async function emailRoute(app: FastifyInstance): Promise<void> {
 
     await res.send('OK'); // Send response to Postal to avoid timeouts
 
+    if (!alias.isActive || req.body.spam_status === 'Spam') {
+      return;
+    }
+
     if (req.body.message_id) {
       try {
         await Email.insert({ messageID: req.body.message_id });
