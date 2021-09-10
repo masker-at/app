@@ -1,0 +1,11 @@
+{
+  "name": "@masker-at/extension",
+  "version": "0.2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masker-at/app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/masker-at/app/issues"
+  }
+}
