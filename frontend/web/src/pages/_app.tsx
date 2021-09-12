@@ -22,6 +22,11 @@ const App = ({ Component, pageProps }: AppProps): ReactNode => {
       <Hydrate state={pageProps.dehydratedState}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <script src="https://cdn.paddle.com/paddle/paddle.js" />
+          <script type="text/javascript">{`
+            Paddle.Environment.set('sandbox')
+            Paddle.Setup({ vendor: 3216 });
+          `}</script>
         </Head>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
