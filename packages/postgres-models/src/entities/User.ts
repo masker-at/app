@@ -31,4 +31,7 @@ export default class User extends BaseEntity {
 
   @Column('simple-array', { default: [] })
   twoFactorRecoveryCodes: string[];
+
+  @Column('integer', { nullable: true })
+  paddleID?: number | null;
 }
