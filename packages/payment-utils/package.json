@@ -1,0 +1,21 @@
+{
+  "name": "@masker-at/payment-utils",
+  "version": "0.2.0",
+  "description": "",
+  "author": "antonlyap <laposhchenkoanton@gmail.com>",
+  "homepage": "https://github.com/masker-at/app#readme",
+  "license": "GPL-3.0-only",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masker-at/app.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "tsc"
+  },
+  "bugs": {
+    "url": "https://github.com/masker-at/app/issues"
+  },
+  "dependencies": {}
+}
