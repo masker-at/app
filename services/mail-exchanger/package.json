@@ -1,6 +1,6 @@
 {
   "name": "@masker-at/mail-exchanger",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "author": "",
   "homepage": "https://github.com/masker-at/app#readme",
   "license": "GPL-3.0-only",
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@masker-at/postal-api": "^0.2.0",
-    "@masker-at/postgres-models": "^0.2.0",
+    "@masker-at/postgres-models": "^0.2.2",
     "cheerio": "^1.0.0-rc.10",
     "fastify": "^3.20.2",
     "html-to-text": "^8.0.0"
