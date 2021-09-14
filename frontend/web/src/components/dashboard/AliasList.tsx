@@ -16,6 +16,8 @@ const AliasList: FC = () => {
       product: 16124,
       email: meData!.email,
       passthrough: JSON.stringify({ userID: meData!.id }),
+      disableLogout: true,
+      marketingConsent: 0,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
