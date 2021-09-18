@@ -16,6 +16,7 @@
     "url": "https://github.com/masker-at/app/issues"
   },
   "dependencies": {
+    "@masker-at/payment-utils": "^0.2.3",
     "@masker-at/postal-api": "^0.2.0",
     "@masker-at/postgres-models": "^0.2.2",
     "cheerio": "^1.0.0-rc.10",

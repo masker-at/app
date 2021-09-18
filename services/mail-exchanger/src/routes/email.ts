@@ -1,10 +1,13 @@
 import { FastifyInstance } from 'fastify';
 import PostalAPI from '@masker-at/postal-api';
 import { Alias, Email } from '@masker-at/postgres-models';
+import { getSubscriptionManager } from '@masker-at/payment-utils';
 import decorateEmail, { IncomingEmail } from '../utils/decorateEmail';
 
 // const MAX_STORED_MESSAGE_SIZE = 3 * 1024 * 1024; // 3 MB
 const MAX_FORWARDED_MESSAGE_SIZE = 50 * 1024 * 1024; // 50 MB
+
+const FREE_TRIAL_DURATION = 7 * 24 * 3600 * 1000; // 7 days
 
 const postalAPI = new PostalAPI(process.env.POSTAL_API_BASE_URL!, process.env.POSTAL_API_KEY!);
 
@@ -24,6 +27,15 @@ export default async function emailRoute(app: FastifyInstance): Promise<void> {
     await res.send('OK'); // Send response to Postal to avoid timeouts
 
     if (!alias.isActive || req.body.spam_status === 'Spam') {
+      return;
+    }
+
+    const subscriptionManager = getSubscriptionManager(alias.user);
+    const subscription = await subscriptionManager?.getSubscription();
+    if (
+      !subscription?.isValid() &&
+      Date.now() - alias.user.createdAt.getTime() > FREE_TRIAL_DURATION
+    ) {
       return;
     }
 
