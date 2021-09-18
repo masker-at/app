@@ -1,9 +1,12 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export default class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   @Column({ unique: true, type: 'citext' })
   email: string;
