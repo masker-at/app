@@ -16,5 +16,10 @@
   },
   "bugs": {
     "url": "https://github.com/masker-at/app/issues"
+  },
+  "gitHead": "350efdea78ff34640d5cecf961afa15910dc4bb7",
+  "dependencies": {
+    "@masker-at/postgres-models": "^0.2.2",
+    "axios": "^0.21.4"
   }
 }
