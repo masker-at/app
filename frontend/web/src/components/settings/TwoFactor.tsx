@@ -1,12 +1,11 @@
 import clsx from 'clsx';
 import { FC } from 'react';
-import { useQuery } from 'react-query';
-import me from '../../utils/api/me';
+import useMeQuery from '../../api-hooks/useMeQuery';
 import TwoFactorDisabled from './TwoFactorDisabled';
 import TwoFactorEnabled from './TwoFactorEnabled';
 
 const TwoFactor: FC = () => {
-  const { data: meData } = useQuery('me', () => me());
+  const { data: meData } = useMeQuery();
   const { is2FAEnabled } = meData!;
 
   return (

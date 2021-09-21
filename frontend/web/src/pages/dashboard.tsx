@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { FC } from 'react';
-import { QueryClient, useQuery } from 'react-query';
+import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import Head from 'next/head';
 import Cookies from 'cookies';
@@ -9,9 +9,10 @@ import EmailUnverified from '../components/dashboard/EmailUnverified';
 import Header from '../components/dashboard/Header';
 import Sidebar from '../components/dashboard/Sidebar';
 import AliasList from '../components/dashboard/AliasList';
+import useMeQuery from '../api-hooks/useMeQuery';
 
 const DashboardPage: FC = () => {
-  const { data } = useQuery('me', () => me());
+  const { data } = useMeQuery();
 
   return (
     <div className="container mx-auto px-10 overflow-auto min-h-screen flex flex-col">

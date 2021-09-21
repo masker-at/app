@@ -1,12 +1,11 @@
 import { FC, useEffect } from 'react';
-import { useQuery } from 'react-query';
+import useMeQuery from '../../api-hooks/useMeQuery';
 import usePollEmailVerification from '../../api-hooks/usePollEmailVerification';
 import useResendEmail from '../../api-hooks/useResendEmail';
 import useCountdown from '../../hooks/useCountdown';
-import me from '../../utils/api/me';
 
 const EmailUnverified: FC = () => {
-  const { data } = useQuery('me', () => me());
+  const { data } = useMeQuery();
 
   const { mutate: pollEmailVerification } = usePollEmailVerification();
   // eslint-disable-next-line react-hooks/exhaustive-deps

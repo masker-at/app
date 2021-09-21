@@ -1,11 +1,10 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { FC, useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
-import me from '../../utils/api/me';
+import useMeQuery from '../../api-hooks/useMeQuery';
 
 const Header: FC = () => {
-  const { data } = useQuery('me', () => me());
+  const { data } = useMeQuery();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

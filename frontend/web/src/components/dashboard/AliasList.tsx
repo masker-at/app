@@ -1,15 +1,14 @@
 import { FC, useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
 import useAliasList from '../../api-hooks/useAliasList';
 import useCreateAlias from '../../api-hooks/useCreateAlias';
-import me from '../../utils/api/me';
+import useMeQuery from '../../api-hooks/useMeQuery';
 import Alias from './Alias';
 
 const AliasList: FC = () => {
   const { data } = useAliasList();
   const { mutate } = useCreateAlias();
   const [search, setSearch] = useState('');
-  const { data: meData } = useQuery('me', () => me());
+  const { data: meData } = useMeQuery();
 
   useEffect(() => {
     (window as any).Paddle.Checkout.open({

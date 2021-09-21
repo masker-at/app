@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router';
 import { FC, FormEventHandler, useCallback, useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
 import useChangeEmail from '../../api-hooks/useChangeEmail';
-import me from '../../utils/api/me';
+import useMeQuery from '../../api-hooks/useMeQuery';
 import Input from '../Input';
 
 const EmailChangeForm: FC = () => {
-  const { data } = useQuery('me', () => me());
+  const { data } = useMeQuery();
   const { email } = data!;
   const [emailValue, setEmailValue] = useState(email);
   useEffect(() => setEmailValue(email), [email]);
