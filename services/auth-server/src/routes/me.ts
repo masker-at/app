@@ -12,7 +12,7 @@ export default async function meRoutes(app: FastifyInstance): Promise<void> {
   });
 
   app.get('/me', { preHandler: authenticateUserHook }, async (req, res) => {
-    await res.send(serializeUser(req.user));
+    await res.send(await serializeUser(req.user));
   });
 
   app.setErrorHandler(errorHandler);

@@ -10,11 +10,32 @@ const paddleClient = axios.create({
   baseURL: 'https://sandbox-vendors.paddle.com/api/2.0/',
 });
 
-export default class PaddleSubscriptionManager implements SubscriptionManager {
+export type PaddlePaymentDetails =
+  | {
+      type: 'CREDIT_CARD';
+      cardType:
+        | 'master'
+        | 'visa'
+        | 'american_express'
+        | 'discover'
+        | 'jcb'
+        | 'maestro'
+        | 'diners_club'
+        | 'unionpay';
+      lastFourDigits: string;
+      expiryDate: string;
+    }
+  | {
+      type: 'PAYPAL';
+    };
+
+export default class PaddleSubscriptionManager
+  implements SubscriptionManager<PaddlePaymentDetails>
+{
   // eslint-disable-next-line no-useless-constructor
   constructor(private user: User & { paddleID: number }) {}
 
-  async getSubscription(): Promise<Subscription | null> {
+  async getSubscription(): Promise<Subscription<PaddlePaymentDetails> | null> {
     const { data: subscriptionData } = await paddleClient.post(
       'subscription/users',
       new URLSearchParams({ ...paddleAuthParams, subscription_id: this.user.paddleID.toString() }),
@@ -31,6 +52,13 @@ export default class PaddleSubscriptionManager implements SubscriptionManager {
       isValid() {
         return subscription.state === 'active';
       },
-    } as Subscription;
+      paymentDetails: {
+        type:
+          subscription.payment_information.payment_method === 'paypal' ? 'PAYPAL' : 'CREDIT_CARD',
+        cardType: subscription.payment_information.card_type,
+        lastFourDigits: subscription.payment_information.last_four_digits,
+        expiryDate: subscription.payment_information.expiry_date,
+      },
+    } as Subscription<PaddlePaymentDetails>;
   }
 }

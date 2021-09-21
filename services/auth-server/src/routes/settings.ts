@@ -50,7 +50,7 @@ export default async function settingsRoutes(app: FastifyInstance): Promise<void
       const verificationToken = signEmailVerificationToken(req.user);
       await sendChangeVerificationEmail(req.user.email, verificationToken);
 
-      await res.send(serializeUser(req.user));
+      await res.send(await serializeUser(req.user));
     },
   );
 
@@ -91,7 +91,7 @@ export default async function settingsRoutes(app: FastifyInstance): Promise<void
       const { value } = req.unsignCookie(req.cookies.sid);
       await Session.delete({ user: req.user, id: Not(value!) });
 
-      await res.send(serializeUser(req.user));
+      await res.send(await serializeUser(req.user));
     },
   );
 

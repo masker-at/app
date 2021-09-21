@@ -10,6 +10,7 @@
   "license": "GPL-3.0-only",
   "dependencies": {
     "@masker-at/http-utils": "^0.2.2",
+    "@masker-at/payment-utils": "^0.2.3",
     "@masker-at/postal-api": "^0.2.0",
     "@masker-at/postgres-models": "^0.2.2",
     "argon2": "^0.28.2",

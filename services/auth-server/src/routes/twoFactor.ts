@@ -55,7 +55,7 @@ export default async function twoFactorRoutes(app: FastifyInstance): Promise<voi
       req.user.is2FAEnabled = true;
       await req.user.save();
 
-      await res.send(serializeUser(req.user));
+      await res.send(await serializeUser(req.user));
     },
   );
 
@@ -85,7 +85,7 @@ export default async function twoFactorRoutes(app: FastifyInstance): Promise<voi
       req.user.is2FAEnabled = false;
       await req.user.save();
 
-      await res.send(serializeUser(req.user));
+      await res.send(await serializeUser(req.user));
     },
   );
 
