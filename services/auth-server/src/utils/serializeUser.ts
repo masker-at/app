@@ -13,6 +13,7 @@ export default async function serializeUser(user: User): Promise<
     isEmailVerified: boolean;
     lastEmailVerificationSentDate: Date;
     is2FAEnabled: boolean;
+    createdAt: string;
   } & (
     | {
         paymentMethod: 'PADDLE';
@@ -33,6 +34,7 @@ export default async function serializeUser(user: User): Promise<
     isEmailVerified: user.isEmailVerified,
     lastEmailVerificationSentDate: user.lastEmailVerificationSentDate,
     is2FAEnabled: user.is2FAEnabled,
+    createdAt: user.createdAt.toISOString(),
     ...(isPaddle
       ? {
           paymentMethod: 'PADDLE',
