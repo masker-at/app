@@ -36,22 +36,14 @@ export default class PaddleSubscriptionManager
   constructor(private user: User & { paddleID: number }) {}
 
   async getSubscription(): Promise<Subscription<PaddlePaymentDetails> | null> {
-    const { data: subscriptionData } = await paddleClient.post(
-      'subscription/users',
-      new URLSearchParams({ ...paddleAuthParams, subscription_id: this.user.paddleID.toString() }),
-    );
-    if (!subscriptionData.success) {
-      throw new Error(subscriptionData.error.message);
-    }
-    const [subscription] = subscriptionData.response;
-    if (!subscription) return null;
+    const subscription = await this.getPaddleSubscription(this.user.paddleID);
+    const plan = subscription && (await this.getPaddlePlan(subscription.plan_id));
 
     return {
       lastPaymentTime: new Date(subscription.last_payment.date),
-      validUntil: new Date(subscription.next_payment.date),
-      isValid() {
-        return subscription.state === 'active';
-      },
+      validUntil: new Date(subscription.next_payment?.date || 0),
+      isValid: subscription.state === 'active',
+      plan: plan.billing_type === 'year' ? 'ANNUAL' : 'MONTHLY',
       paymentDetails: {
         type:
           subscription.payment_information.payment_method === 'paypal' ? 'PAYPAL' : 'CREDIT_CARD',
@@ -59,6 +51,34 @@ export default class PaddleSubscriptionManager
         lastFourDigits: subscription.payment_information.last_four_digits,
         expiryDate: subscription.payment_information.expiry_date,
       },
+      updateURL: subscription.update_url,
+      cancelURL: subscription.cancel_url,
     } as Subscription<PaddlePaymentDetails>;
+  }
+
+  private async getPaddleSubscription(userID: number) {
+    const { data } = await paddleClient.post(
+      'subscription/users',
+      new URLSearchParams({ ...paddleAuthParams, subscription_id: userID.toString() }),
+    );
+    if (!data.success) {
+      throw new Error(data.error.message);
+    }
+    const [subscription] = data.response;
+    if (!subscription) return null;
+    return subscription;
+  }
+
+  private async getPaddlePlan(planID: number) {
+    const { data } = await paddleClient.post(
+      'subscription/plans',
+      new URLSearchParams({ ...paddleAuthParams, plan: planID.toString() }),
+    );
+    if (!data.success) {
+      throw new Error(data.error.message);
+    }
+    const [plan] = data.response;
+    if (!plan) return null;
+    return plan;
   }
 }

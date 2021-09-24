@@ -18,10 +18,19 @@ export default async function serializeUser(user: User): Promise<
     | {
         paymentMethod: 'PADDLE';
         paymentDetails: PaddlePaymentDetails;
+        subscription: {
+          isValid: boolean;
+          lastPaymentTime: string;
+          validUntil: string;
+          plan: 'MONTHLY' | 'ANNUAL';
+          cancelURL: string;
+          updateURL: string;
+        };
       }
     | {
         paymentMethod: null;
         paymentDetails: null;
+        subscription: null;
       }
   )
 > {
@@ -39,10 +48,19 @@ export default async function serializeUser(user: User): Promise<
       ? {
           paymentMethod: 'PADDLE',
           paymentDetails: (subscription as Subscription<PaddlePaymentDetails>).paymentDetails,
+          subscription: {
+            isValid: subscription!.isValid,
+            lastPaymentTime: subscription!.lastPaymentTime.toISOString(),
+            validUntil: subscription!.validUntil.toISOString(),
+            plan: subscription!.plan,
+            cancelURL: subscription!.cancelURL,
+            updateURL: subscription!.updateURL,
+          },
         }
       : {
           paymentDetails: null,
           paymentMethod: null,
+          subscription: null,
         }),
   };
 }

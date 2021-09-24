@@ -7,8 +7,14 @@ import Cookies from 'cookies';
 import me from '../utils/api/me';
 import Header from '../components/dashboard/Header';
 import Sidebar from '../components/dashboard/Sidebar';
+import useMeQuery from '../api-hooks/useMeQuery';
+import FreeTrial from '../components/billing/FreeTrial';
+import PaymentMethodAdded from '../components/billing/PaymentMethodAdded';
 
 const SettingsPage: FC = () => {
+  const { data } = useMeQuery();
+  const { paymentMethod } = data!;
+
   return (
     <div className="container mx-auto px-10 overflow-auto min-h-screen flex flex-col">
       <Head>
@@ -20,7 +26,7 @@ const SettingsPage: FC = () => {
         <Sidebar />
         <main className="flex-grow sm:pl-5 xl:mr-72 flex flex-col">
           <h1 className="text-2xl font-quicksand mt-2">Billing</h1>
-          <h2>Current</h2>
+          {paymentMethod ? <PaymentMethodAdded /> : <FreeTrial />}
         </main>
       </div>
     </div>

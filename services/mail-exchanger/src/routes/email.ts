@@ -33,7 +33,7 @@ export default async function emailRoute(app: FastifyInstance): Promise<void> {
     const subscriptionManager = getSubscriptionManager(alias.user);
     const subscription = await subscriptionManager?.getSubscription();
     if (
-      !subscription?.isValid() &&
+      !subscription?.isValid &&
       Date.now() - alias.user.createdAt.getTime() > FREE_TRIAL_DURATION
     ) {
       return;

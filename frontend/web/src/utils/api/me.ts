@@ -5,17 +5,26 @@ export type User = {
   id: number;
   email: string;
   isEmailVerified: boolean;
-  lastEmailVerificationSentDate: string;
+  lastEmailVerificationSentDate: Date;
   is2FAEnabled: boolean;
   createdAt: string;
 } & (
   | {
       paymentMethod: 'PADDLE';
       paymentDetails: PaddlePaymentDetails;
+      subscription: {
+        isValid: boolean;
+        lastPaymentTime: string;
+        validUntil: string;
+        plan: 'MONTHLY' | 'ANNUAL';
+        updateURL: string;
+        cancelURL: string;
+      };
     }
   | {
       paymentMethod: null;
       paymentDetails: null;
+      subscription: null;
     }
 );
 
