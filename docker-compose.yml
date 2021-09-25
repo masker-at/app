@@ -66,6 +66,20 @@ services:
       - 9232:9229
       - 4001:3000
 
+  payment-manager:
+    image: node:16
+    volumes:
+      - .:/opt/app
+    command: node --inspect=0.0.0.0:9229 .
+    working_dir: /opt/app/services/payment-manager
+    env_file: .env
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 9233:9229
+      - 4001:3000
+
   caddy:
     image: caddy:2.4.3-alpine
     volumes:
