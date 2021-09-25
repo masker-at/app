@@ -39,6 +39,10 @@ const ERRORS = {
     message: 'Your authenticator app code or recovery code is invalid',
     httpStatus: 403,
   },
+  NO_PADDLE_SUBSCRIPTION: {
+    message: "You don't have a Paddle subscription",
+    httpStatus: 403,
+  },
 };
 
 export default class HTTPError extends Error {

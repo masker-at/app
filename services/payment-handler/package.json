@@ -16,8 +16,13 @@
     "url": "https://github.com/masker-at/app/issues"
   },
   "dependencies": {
+    "@masker-at/http-utils": "^0.2.2",
+    "@masker-at/payment-utils": "^0.2.3",
     "@masker-at/postgres-models": "^0.2.2",
-    "fastify": "^3.21.0",
+    "axios": "^0.21.4",
+    "fastify": "^3.20.1",
+    "fastify-cookie": "^5.3.1",
+    "fastify-cors": "^6.0.2",
     "fastify-formbody": "^5.1.0",
     "php-serialize": "^4.0.2"
   }

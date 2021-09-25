@@ -1,7 +1,10 @@
 import 'reflect-metadata';
+import crypto from 'crypto';
 import { createConnection } from 'typeorm';
 import fastify from 'fastify';
 import fastifyFormBody from 'fastify-formbody';
+import fastifyCors from 'fastify-cors';
+import fastifyCookie from 'fastify-cookie';
 import paddleRoute from './routes/paddle';
 
 (async () => {
@@ -11,6 +14,13 @@ import paddleRoute from './routes/paddle';
   const app = fastify({ ignoreTrailingSlash: true, bodyLimit: 100 * 1024 * 1024 });
 
   await app.register(fastifyFormBody);
+  await app.register(fastifyCors, {
+    credentials: true,
+    origin: [/^http:\/\/localhost(:|\/)/, /^https:\/\/(.*\.)?masker.at/],
+  });
+  await app.register(fastifyCookie, {
+    secret: process.env.COOKIE_SECRET || crypto.randomBytes(32).toString('base64'),
+  });
 
   await app.register(paddleRoute);
 

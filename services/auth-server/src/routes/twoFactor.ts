@@ -1,9 +1,13 @@
 import { FastifyInstance } from 'fastify';
 import speakeasy from 'speakeasy';
 import QRCode from 'qrcode';
-import { authenticateUserHook, errorHandler, HTTPError } from '@masker-at/http-utils';
+import {
+  authenticateUserHook,
+  errorHandler,
+  HTTPError,
+  serializeUser,
+} from '@masker-at/http-utils';
 import { check2FA, generateRecoveryCodes } from '../utils/twoFactor';
-import serializeUser from '../utils/serializeUser';
 
 export default async function twoFactorRoutes(app: FastifyInstance): Promise<void> {
   app.post(

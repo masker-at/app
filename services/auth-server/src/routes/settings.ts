@@ -1,13 +1,17 @@
 import { FastifyInstance } from 'fastify';
 import argon2 from 'argon2';
 import { Not } from 'typeorm';
-import { errorHandler, authenticateUserHook, HTTPError } from '@masker-at/http-utils';
+import {
+  errorHandler,
+  authenticateUserHook,
+  HTTPError,
+  serializeUser,
+} from '@masker-at/http-utils';
 import { Session } from '@masker-at/postgres-models';
 import {
   signEmailVerificationToken,
   sendChangeVerificationEmail,
 } from '../utils/emailVerification';
-import serializeUser from '../utils/serializeUser';
 
 export default async function settingsRoutes(app: FastifyInstance): Promise<void> {
   app.post<{

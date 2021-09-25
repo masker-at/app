@@ -1,6 +1,10 @@
 import { FastifyInstance } from 'fastify';
-import { errorHandler, authenticateUserHook, getSession } from '@masker-at/http-utils';
-import serializeUser from '../utils/serializeUser';
+import {
+  errorHandler,
+  authenticateUserHook,
+  getSession,
+  serializeUser,
+} from '@masker-at/http-utils';
 
 export default async function meRoutes(app: FastifyInstance): Promise<void> {
   app.get('/verify-session', async (req, res) => {
