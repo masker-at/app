@@ -78,7 +78,6 @@ services:
       - postgres
     ports:
       - 9233:9229
-      - 4001:3000
 
   caddy:
     image: caddy:2.4.3-alpine

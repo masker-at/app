@@ -9,5 +9,9 @@
 		reverse_proxy http://alias-manager:3000
 	}
 
+	handle_path /payments/* {
+		reverse_proxy http://payment-manager:3000
+	}
+
 	error 404
 }
