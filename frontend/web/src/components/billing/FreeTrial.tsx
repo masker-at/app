@@ -30,10 +30,7 @@ const FreeTrial: FC = () => {
         className="text-left text-primary-darker underline"
         onClick={openCheckout}
       >
-        Upgrade{' '}
-        {trialEndDateUnixMs > Date.now()
-          ? 'for unlimited aliases and more!'
-          : 'to continue using your account'}
+        Upgrade {trialEndDateUnixMs > Date.now() ? 'now' : 'to continue using your account'}
       </button>
     </>
   );

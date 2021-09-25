@@ -1,15 +1,36 @@
 import { FC, useState } from 'react';
+import Link from 'next/link';
 import useAliasList from '../../api-hooks/useAliasList';
 import useCreateAlias from '../../api-hooks/useCreateAlias';
+import useMeQuery from '../../api-hooks/useMeQuery';
 import Alias from './Alias';
 
 const AliasList: FC = () => {
-  const { data } = useAliasList();
+  const { data: aliasData } = useAliasList();
+  const { data: meData } = useMeQuery();
   const { mutate } = useCreateAlias();
   const [search, setSearch] = useState('');
 
+  const isTrialEndingSoon =
+    !meData!.subscription && Date.now() - Date.parse(meData!.createdAt) >= 4 * 24 * 3600 * 1000;
+  const isTrialEnded =
+    !meData!.subscription && Date.now() - Date.parse(meData!.createdAt) >= 7 * 24 * 3600 * 1000;
+
   return (
     <main className="flex-grow sm:pl-5 xl:mr-72 flex flex-col">
+      {isTrialEndingSoon && (
+        <section className="flex-grow-0 flex-shrink-0 bg-yellow-400 p-5 rounded mb-3 text-yellow-900">
+          Your free trial end
+          {isTrialEnded ? 'ed' : 's'} on <b>{new Date(meData!.createdAt).toLocaleDateString()}</b>.{' '}
+          <Link href="/billing">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <a className="underline">Upgrade</a>
+          </Link>{' '}
+          {isTrialEnded
+            ? 'to continue receiving emails'
+            : 'to avoid interruptions in forwarding emails'}
+        </section>
+      )}
       <section className="flex-grow-0 flex-shrink-0 flex justify-between items-center flex-wrap">
         <button
           type="submit"
@@ -30,7 +51,7 @@ const AliasList: FC = () => {
       </section>
 
       <section className="flex-1 overflow-auto mt-3">
-        {data?.map(
+        {aliasData?.map(
           (alias) =>
             (!search || alias.name?.toLowerCase().includes(search.toLowerCase())) && (
               <Alias alias={alias} key={alias.id} />
