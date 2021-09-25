@@ -1,6 +1,7 @@
+import { FC, useCallback } from 'react';
 import { PaddlePaymentDetails } from '@masker-at/payment-utils';
-import { FC } from 'react';
 import useMeQuery from '../../api-hooks/useMeQuery';
+import useSwitchPlan from '../../api-hooks/useSwitchPlan';
 import useOpenCheckout from '../../hooks/useOpenCheckout';
 
 const READABLE_CARD_NAMES = {
@@ -34,13 +35,19 @@ const isCreditCardPaymentDetails = (
 const PaymentMethodAdded: FC = () => {
   const { data } = useMeQuery();
   const { paymentMethod, paymentDetails, subscription } = data!;
+  const { plan, validUntil, isValid, updateURL, cancelURL } = subscription!;
   const openCheckout = useOpenCheckout();
+
+  const { mutate, isLoading } = useSwitchPlan();
+  const handleSwitch = useCallback(() => {
+    mutate(plan === 'ANNUAL' ? 'MONTHLY' : 'ANNUAL');
+  }, [mutate, plan]);
 
   switch (paymentMethod) {
     case 'PADDLE':
       return (
         <>
-          {Date.parse(subscription!.validUntil) === 0 ? (
+          {Date.parse(validUntil) === 0 ? (
             <p>
               Your subscription is cancelled.{' '}
               <button
@@ -62,25 +69,25 @@ const PaymentMethodAdded: FC = () => {
                   : 'PayPal'}
               </p>
               <p>
-                <b>Plan:</b> {subscription!.plan === 'ANNUAL' ? 'Annual' : 'Monthly'}
+                <b>Plan:</b> {plan === 'ANNUAL' ? 'Annual' : 'Monthly'}
               </p>
-              <p>
-                Your next payment will be on{' '}
-                {new Date(subscription!.validUntil).toLocaleDateString()}
-              </p>
+              <p>Your next payment will be on {new Date(validUntil).toLocaleDateString()}</p>
               <div className="flex justify-start">
-                {subscription!.isValid && (
-                  <button type="button" className="text-left text-primary-darker underline mr-2">
-                    Switch to {subscription!.plan === 'MONTHLY' ? 'annual' : 'monthly'}
+                {isValid && (
+                  <button
+                    type="button"
+                    className="text-left text-primary-darker underline mr-2"
+                    onClick={handleSwitch}
+                  >
+                    {isLoading
+                      ? 'Switching...'
+                      : `Switch to ${plan === 'MONTHLY' ? 'annual' : 'monthly'}`}
                   </button>
                 )}
-                <a
-                  className="text-left text-primary-darker underline mr-2"
-                  href={subscription!.updateURL}
-                >
+                <a className="text-left text-primary-darker underline mr-2" href={updateURL}>
                   Change payment method
                 </a>
-                <a className="text-left text-red-600 underline" href={subscription!.cancelURL}>
+                <a className="text-left text-red-600 underline" href={cancelURL}>
                   Cancel subscription
                 </a>
               </div>
