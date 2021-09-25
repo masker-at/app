@@ -6,7 +6,7 @@ export default async function paddleRoute(app: FastifyInstance): Promise<void> {
   app.post<{ Body: any }>('/paddle', { preHandler: verifyWebhook }, async (req, res) => {
     switch (req.body.alert_name) {
       case 'subscription_created': {
-        const { userID } = req.body.passthrough;
+        const { userID } = JSON.parse(req.body.passthrough);
         const user = await User.findOne({ id: userID });
         if (!user) break;
 

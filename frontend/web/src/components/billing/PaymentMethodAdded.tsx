@@ -1,6 +1,7 @@
 import { PaddlePaymentDetails } from '@masker-at/payment-utils';
 import { FC } from 'react';
 import useMeQuery from '../../api-hooks/useMeQuery';
+import useOpenCheckout from '../../hooks/useOpenCheckout';
 
 const READABLE_CARD_NAMES = {
   visa: 'Visa',
@@ -33,6 +34,7 @@ const isCreditCardPaymentDetails = (
 const PaymentMethodAdded: FC = () => {
   const { data } = useMeQuery();
   const { paymentMethod, paymentDetails, subscription } = data!;
+  const openCheckout = useOpenCheckout();
 
   switch (paymentMethod) {
     case 'PADDLE':
@@ -41,7 +43,11 @@ const PaymentMethodAdded: FC = () => {
           {Date.parse(subscription!.validUntil) === 0 ? (
             <p>
               Your subscription is cancelled.{' '}
-              <button type="button" className="text-left text-primary-darker underline mr-2">
+              <button
+                type="button"
+                className="text-left text-primary-darker underline mr-2"
+                onClick={openCheckout}
+              >
                 Resubscribe
               </button>
             </p>

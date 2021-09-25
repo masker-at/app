@@ -1,25 +1,12 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import useAliasList from '../../api-hooks/useAliasList';
 import useCreateAlias from '../../api-hooks/useCreateAlias';
-import useMeQuery from '../../api-hooks/useMeQuery';
 import Alias from './Alias';
 
 const AliasList: FC = () => {
   const { data } = useAliasList();
   const { mutate } = useCreateAlias();
   const [search, setSearch] = useState('');
-  const { data: meData } = useMeQuery();
-
-  useEffect(() => {
-    (window as any).Paddle.Checkout.open({
-      product: 16124,
-      email: meData!.email,
-      passthrough: JSON.stringify({ userID: meData!.id }),
-      disableLogout: true,
-      marketingConsent: 0,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <main className="flex-grow sm:pl-5 xl:mr-72 flex flex-col">
