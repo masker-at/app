@@ -5,7 +5,7 @@ export type User = {
   id: number;
   email: string;
   isEmailVerified: boolean;
-  lastEmailVerificationSentDate: Date;
+  lastEmailVerificationSentDate: string;
   is2FAEnabled: boolean;
   createdAt: string;
 } & (
