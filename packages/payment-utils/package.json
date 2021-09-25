@@ -1,6 +1,6 @@
 {
   "name": "@masker-at/payment-utils",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "",
   "author": "antonlyap <laposhchenkoanton@gmail.com>",
   "homepage": "https://github.com/masker-at/app#readme",
@@ -19,7 +19,7 @@
   },
   "gitHead": "350efdea78ff34640d5cecf961afa15910dc4bb7",
   "dependencies": {
-    "@masker-at/postgres-models": "^0.2.2",
+    "@masker-at/postgres-models": "^0.2.4",
     "axios": "^0.21.4"
   }
 }

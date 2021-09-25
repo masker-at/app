@@ -1,6 +1,6 @@
 {
   "name": "@masker-at/alias-manager",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "",
   "author": "antonlyap <laposhchenkoanton@gmail.com>",
   "homepage": "https://github.com/masker-at/app#readme",
@@ -18,8 +18,8 @@
     "url": "https://github.com/masker-at/app/issues"
   },
   "dependencies": {
-    "@masker-at/http-utils": "^0.2.2",
-    "@masker-at/postgres-models": "^0.2.2",
+    "@masker-at/http-utils": "^0.2.4",
+    "@masker-at/postgres-models": "^0.2.4",
     "fastify": "^3.20.1",
     "fastify-cookie": "^5.3.1",
     "fastify-cors": "^6.0.2"

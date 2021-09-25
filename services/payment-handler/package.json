@@ -1,6 +1,6 @@
 {
   "name": "@masker-at/payment-handler",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "author": "",
   "homepage": "https://github.com/masker-at/app#readme",
   "license": "GPL-3.0-only",
@@ -16,7 +16,7 @@
     "url": "https://github.com/masker-at/app/issues"
   },
   "dependencies": {
-    "@masker-at/postgres-models": "^0.2.2",
+    "@masker-at/postgres-models": "^0.2.4",
     "fastify": "^3.20.1",
     "fastify-formbody": "^5.1.0",
     "php-serialize": "^4.0.2"
