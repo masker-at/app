@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import Head from 'next/head';
@@ -15,10 +15,25 @@ const SettingsPage: FC = () => {
   const { data } = useMeQuery();
   const { paymentMethod } = data!;
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if ((window as any).Paddle) {
+        clearInterval(interval);
+        if (process.env.NEXT_PUBLIC_PADDLE_ENABLE_SANDBOX !== 'false') {
+          (window as any).Paddle.Environment.set('sandbox');
+        }
+        (window as any).Paddle.Setup({
+          vendor: Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR_ID),
+        });
+      }
+    }, 1000);
+  }, []);
+
   return (
     <div className="container mx-auto px-10 overflow-auto min-h-screen flex flex-col">
       <Head>
         <title>Masker@</title>
+        <script src="https://cdn.paddle.com/paddle/paddle.js" />
       </Head>
 
       <Header />
