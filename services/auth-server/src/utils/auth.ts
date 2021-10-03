@@ -58,7 +58,7 @@ export async function createAndSendSession(user: User, res: FastifyReply): Promi
   }).save();
 
   void res.setCookie('sid', session.id, {
-    domain: 'localhost',
+    domain: new URL(process.env.FRONTEND_BASE_URL!).hostname,
     maxAge: 30 * 24 * 3600,
     httpOnly: true,
     sameSite: 'lax',

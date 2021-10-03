@@ -27,7 +27,7 @@ export async function sendVerificationEmail(
 
 You've just signed up for Masker@ (https://www.masker.at). To verify your email address,
 please click the following link:
-http://localhost:3000/auth/verify-email/${verificationToken}
+${process.env.FRONTEND_BASE_URL}/auth/verify-email/${verificationToken}
 
 The link expires in 1 hour. If you need to request a new one, sign in to your account.
 
@@ -48,7 +48,7 @@ export async function sendChangeVerificationEmail(
 
 You've just changed your email for Masker@ (https://www.masker.at).
 To confirm that this will be your new email address, please click the following link:
-http://localhost:3000/auth/verify-email/${verificationToken}
+${process.env.FRONTEND_BASE_URL}/auth/verify-email/${verificationToken}
 
 The link expires in 1 hour. If you need to request a new one, sign in to your account.
 

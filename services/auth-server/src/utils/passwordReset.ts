@@ -24,7 +24,7 @@ export async function sendPasswordResetEmail(
     plainBody: `Hello there,
 
 You've just requested a password reset for Masker@. To change your password, please visit the following link:
-http://localhost:3000/auth/reset-password/${verificationToken}
+${process.env.FRONTEND_BASE_URL}/auth/reset-password/${verificationToken}
 
 The link expires in 1 hour. If you need to request a new one, please use the login form.
 
