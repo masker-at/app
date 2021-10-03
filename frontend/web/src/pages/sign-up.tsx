@@ -49,7 +49,7 @@ const SignUpPage: FC = () => {
         await signUp(emailValue, passwordValue);
         await router.push('/dashboard');
       } catch (err) {
-        switch (err.response?.data.code) {
+        switch ((err as any).response?.data.code) {
           case 'USER_ALREADY_EXISTS':
             setErrorLocation('EMAIL');
             setErrorMessage('A user with this email already exists. Did you want to log in?');
@@ -137,6 +137,28 @@ const SignUpPage: FC = () => {
           {errorLocation === 'FORM' && errorMessage && (
             <p className="text-sm text-red-600 mt-2">{errorMessage}</p>
           )}
+
+          <p className="mt-2 text-sm text-gray-600">
+            By pressing the button below, you agree to our{' '}
+            <a
+              href="https://www.masker.at/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary-darker underline"
+            >
+              Terms of Service
+            </a>{' '}
+            and{' '}
+            <a
+              href="https://www.masker.at/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary-darker underline"
+            >
+              Privacy Policy
+            </a>
+            .
+          </p>
 
           <button
             type="submit"
