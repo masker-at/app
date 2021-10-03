@@ -7,7 +7,9 @@ const paddleAuthParams = {
   vendor_auth_code: process.env.PADDLE_VENDOR_AUTH_CODE!,
 };
 const paddleClient = axios.create({
-  baseURL: 'https://sandbox-vendors.paddle.com/api/2.0/',
+  baseURL: `https://${
+    process.env.PADDLE_ENABLE_SANDBOX !== 'false' ? '' : `sandbox-`
+  }vendors.paddle.com/api/2.0/`,
 });
 
 export type PaddlePaymentDetails =

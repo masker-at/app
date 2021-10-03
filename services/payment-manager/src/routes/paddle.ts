@@ -27,7 +27,9 @@ export default async function paddleRoute(app: FastifyInstance): Promise<void> {
       if (!subscription) throw new HTTPError('NO_PADDLE_SUBSCRIPTION');
 
       const { data } = await axios.post(
-        'https://sandbox-vendors.paddle.com/api/2.0/subscription/users/update',
+        `https://${
+          process.env.PADDLE_ENABLE_SANDBOX !== 'false' ? '' : `sandbox-`
+        }vendors.paddle.com/api/2.0/subscription/users/update`,
         new URLSearchParams({
           vendor_id: process.env.PADDLE_VENDOR_ID!,
           vendor_auth_code: process.env.PADDLE_VENDOR_AUTH_CODE!,
