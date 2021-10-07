@@ -50,6 +50,9 @@ export const LoginBodySchema = {
   required: ['email', 'password'],
 };
 
+const { hostname } = new URL(process.env.FRONTEND_BASE_URL!);
+const cookieDomain = hostname.split('.').slice(-2).join('.');
+
 export async function createAndSendSession(user: User, res: FastifyReply): Promise<Session> {
   const session = await Session.create({
     id: crypto.randomBytes(32).toString('hex'),
@@ -58,7 +61,7 @@ export async function createAndSendSession(user: User, res: FastifyReply): Promi
   }).save();
 
   void res.setCookie('sid', session.id, {
-    domain: new URL(process.env.FRONTEND_BASE_URL!).hostname,
+    domain: cookieDomain,
     maxAge: 30 * 24 * 3600,
     httpOnly: true,
     sameSite: 'lax',
