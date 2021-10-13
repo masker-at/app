@@ -12,7 +12,7 @@ const AliasList: FC = () => {
   const [search, setSearch] = useState('');
 
   const trialEnd = Date.parse(meData!.createdAt) + 7 * 24 * 3600 * 1000;
-  const isTrialEndingSoon = !meData!.subscription && Date.now() - 3 * 24 * 3600 * 1000 > trialEnd;
+  const isTrialEndingSoon = !meData!.subscription && Date.now() + 3 * 24 * 3600 * 1000 > trialEnd;
   const isTrialEnded = !meData!.subscription && Date.now() > trialEnd;
 
   return (
