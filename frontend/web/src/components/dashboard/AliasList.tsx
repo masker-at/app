@@ -11,17 +11,16 @@ const AliasList: FC = () => {
   const { mutate } = useCreateAlias();
   const [search, setSearch] = useState('');
 
-  const isTrialEndingSoon =
-    !meData!.subscription && Date.now() - Date.parse(meData!.createdAt) >= 4 * 24 * 3600 * 1000;
-  const isTrialEnded =
-    !meData!.subscription && Date.now() - Date.parse(meData!.createdAt) >= 7 * 24 * 3600 * 1000;
+  const trialEnd = Date.parse(meData!.createdAt) + 7 * 24 * 3600 * 1000;
+  const isTrialEndingSoon = !meData!.subscription && Date.now() - 3 * 24 * 3600 * 1000 > trialEnd;
+  const isTrialEnded = !meData!.subscription && Date.now() > trialEnd;
 
   return (
     <main className="flex-grow sm:pl-5 xl:mr-72 flex flex-col">
       {isTrialEndingSoon && (
         <section className="flex-grow-0 flex-shrink-0 bg-yellow-400 p-5 rounded mb-3 text-yellow-900">
           Your free trial end
-          {isTrialEnded ? 'ed' : 's'} on <b>{new Date(meData!.createdAt).toLocaleDateString()}</b>.{' '}
+          {isTrialEnded ? 'ed' : 's'} on <b>{new Date(trialEnd).toLocaleDateString()}</b>.{' '}
           <Link href="/billing">
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a className="underline">Upgrade</a>
