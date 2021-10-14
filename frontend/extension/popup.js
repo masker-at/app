@@ -1,7 +1,7 @@
-const SITE_URL = 'http://localhost:3001';
+const SITE_URL = 'https://app.masker.at';
 
 (async () => {
-  const [{ value: csrfToken }, { value: sessionID }] = await Promise.all([
+  const [csrfToken, sessionID] = await Promise.all([
     browser.cookies.get({
       url: SITE_URL,
       name: 'ct',
@@ -12,10 +12,10 @@ const SITE_URL = 'http://localhost:3001';
     }),
   ]);
 
-  const response = await fetch('http://localhost:3000/auth/me', {
+  const response = await fetch('https://api.masker.at/auth/me', {
     headers: {
-      Cookie: `sid=${sessionID}`,
-      'X-CSRF-Token': csrfToken,
+      Cookie: `sid=${sessionID?.value}`,
+      'X-CSRF-Token': csrfToken?.value,
     },
   });
   const meData = await response.json();

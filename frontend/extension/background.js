@@ -1,10 +1,12 @@
+const menus = browser.menus || browser.contextMenus;
+
 function createMenus() {
-  browser.menus.create({
+  menus.create({
     id: 'create-alias',
     title: 'Create new alias',
     contexts: ['editable'],
   });
-  browser.menus.create({
+  menus.create({
     id: 'use-existing-alias',
     title: 'Use existing alias',
     contexts: ['editable'],
@@ -14,7 +16,7 @@ createMenus();
 
 let aliases = [];
 
-browser.menus.onClicked.addListener(async function (info, tab) {
+menus.onClicked.addListener(async function (info, tab) {
   switch (info.menuItemId) {
     case 'create-alias':
       await browser.tabs.executeScript(tab.id, {
@@ -33,7 +35,7 @@ browser.menus.onClicked.addListener(async function (info, tab) {
   }
 });
 
-const SITE_URL = 'http://localhost:3001';
+const SITE_URL = 'https://app.masker.at';
 
 browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   switch (message.type) {
@@ -50,7 +52,7 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
           }),
         ]);
 
-        const createResponse = await fetch('http://localhost:3000/aliases/create', {
+        const createResponse = await fetch('https://api.masker.at/aliases/create', {
           headers: {
             Cookie: `sid=${sessionID}`,
             'X-CSRF-Token': csrfToken,
@@ -63,7 +65,7 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
           const createData = await createResponse.json();
           sendResponse(createData);
 
-          browser.menus.create({
+          menus.create({
             id: `use-existing-alias-${createData.id}`,
             parentId: 'use-existing-alias',
             title: `${createData.name} <${createData.address}>`,
@@ -93,7 +95,7 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
           }),
         ]);
   
-        const listResponse = await fetch('http://localhost:3000/aliases/list', {
+        const listResponse = await fetch('https://api.masker.at/aliases/list', {
           headers: {
             Cookie: `sid=${sessionID}`,
             'X-CSRF-Token': csrfToken,
@@ -101,17 +103,17 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         });
         if (listResponse.status === 200) {
           const aliasesList = await listResponse.json();
-          browser.menus.removeAll();
+          menus.removeAll();
           createMenus();
           for (const alias of aliasesList) {
-            browser.menus.create({
+            menus.create({
               id: `use-existing-alias-${alias.id}`,
               parentId: 'use-existing-alias',
               title: alias.name ? `${alias.name} <${alias.address}>` : alias.address,
               contexts: ['editable'],
             });
           }
-          browser.menus.refresh();
+          menus.refresh();
           aliases = aliasesList;
         }
       })().catch(console.error);

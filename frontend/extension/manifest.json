@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Masker@",
-  "version": "0.0",
+  "version": "1.0",
 
   "description": "Browser extension for Masker@ (https://www.masker.at)",
 
@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "js": ["browser-polyfill.js", "content.js"]
     }
   ],
 
@@ -23,9 +23,9 @@
     "default_popup": "popup.html"
   },
 
-  "permissions": ["cookies", "menus", "activeTab", "notifications", "*://localhost/*"],
+  "permissions": ["cookies", "menus", "contextMenus", "activeTab", "notifications", "*://masker.at/*", "*://app.masker.at/*", "*://api.masker.at/*"],
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["browser-polyfill.js", "background.js"]
   }
 }
