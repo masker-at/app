@@ -20,9 +20,11 @@ const Sidebar: FC = () => {
       case 'Opera':
         setStoreLink('https://addons.opera.com/extensions/details/masker/');
         break;
+
       case 'Firefox':
         setStoreLink('https://addons.mozilla.org/firefox/addon/masker/');
         break;
+
       case 'Chrome':
       case 'NAVER Whale Browser':
       case 'Yandex Browser':
@@ -34,6 +36,7 @@ const Sidebar: FC = () => {
       case 'Google Search':
         setStoreLink('https://chrome.google.com/webstore/detail/masker/kpoepndjfihfbmcflmikjaecfpfaomie');
         break;
+
       default:
     }
   }, []);
