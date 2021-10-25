@@ -32,7 +32,7 @@ const Sidebar: FC = () => {
       case 'Vivaldi':
       case 'Chromium':
       case 'Google Search':
-        setStoreLink('https://masker.at'); // TODO: Change
+        setStoreLink('https://chrome.google.com/webstore/detail/masker/kpoepndjfihfbmcflmikjaecfpfaomie');
         break;
       default:
     }
