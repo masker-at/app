@@ -34,7 +34,9 @@ const Sidebar: FC = () => {
       case 'Vivaldi':
       case 'Chromium':
       case 'Google Search':
-        setStoreLink('https://chrome.google.com/webstore/detail/masker/kpoepndjfihfbmcflmikjaecfpfaomie');
+        setStoreLink(
+          'https://chrome.google.com/webstore/detail/masker/kpoepndjfihfbmcflmikjaecfpfaomie',
+        );
         break;
 
       default:
